@@ -3,7 +3,7 @@ Group Project for Softdev2
 
 Roles
 
-Paul: Code Architecture
+Paul: Code Architecture</br>
 Albert: Testing lead
 Zuberi: Data Modeler
 Julian: Documentation Lead, Team Manager
