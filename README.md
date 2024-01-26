@@ -5,4 +5,5 @@
 **Team**
 * **Paul Berger**
     * Code Architect
-
+* **Jason Urquilla-Martinez**
+    * UI/UX Designer
