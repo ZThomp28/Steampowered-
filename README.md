@@ -9,3 +9,5 @@
     * UI/UX Designer
 * **Julian Ramirez**
     * Team lead/Documentation lead
+* **Zuberi Thompson**
+    * Data modeler
