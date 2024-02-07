@@ -33,16 +33,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - name: Navigate to Subdirectory
-        run: cd src/main/resources/static/index.html
+        uses: actions/checkout@v4      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload content from the subdirectory
-          path: '.'
+          path: 'src/main/resources/static'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
