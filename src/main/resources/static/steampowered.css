@@ -1,0 +1,84 @@
+.header {
+    background-color: #171A21;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    color: #C7D5E0;
+    margin: 0;
+}
+
+body {
+    background-color: #2A475E;
+}
+
+.top-border {
+    background-color: #171A21;
+    padding: 3px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bottom-border {
+    background-color: #171A21;
+    padding: 3px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tab-bar {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+
+.tab {
+    color: #C7D5E0;
+    background-color: #1B2838;
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+
+
+.tab.active {
+    color: #C7D5E0;
+    background-color: #66C0F4;
+}
+
+
+body, .tab {
+    color: #C7D5E0;
+}
+
+/*CLICKABLE TABS*/
+.tab {
+    padding: 10px 20px;
+    display: inline-block;
+    margin-right: 5px;
+    text-align: center;
+    border: none;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.tab a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.tab:hover, .tab a:hover {
+    background-color: #2A475E;
+}
+
+.tab.active, .tab.active a {
+    background-color: #66C0F4;
+    color: #C7D5E0;
+}
