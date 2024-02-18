@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="steampowered.css">
+    <link rel="stylesheet" th:href="@{steampowered.css}">
     <meta charset="UTF-8">
     <title>SteamPowered Multiplayer Page</title>
 </head>
@@ -9,9 +9,9 @@
 <div class="top-border">
     <h1>SteamPowered</h1> <!-- TITLE TEXT -->
     <div class="tab-bar"> <!-- NAVIGATION BAR -->
-        <div class="tab"><a href="index.html">WHEEL</a></div>
-        <div class="tab"><a href="profile.html">PROFILE</a></div>
-        <div class="tab active"><a href="multiplayer.html">MULTIPLAYER</a></div>
+        <div class="tab"><a th:href="@{/}">WHEEL</a></div>
+        <div class="tab"><a th:href="@{profile}">PROFILE</a></div>
+        <div class="tab"><a th:href="@{multiplayer}">MULTIPLAYER</a></div>
     </div>
 </div>
 <div class="content">
