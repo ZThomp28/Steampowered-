@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class UserTest {
 
-    User paul = new User("WebsiteMindOfPaul", "MindOfPaul", "1111");
+    User paul = new User("MindOfPaul", "1111");
 
     @Test
     void getWebsiteUserName() {

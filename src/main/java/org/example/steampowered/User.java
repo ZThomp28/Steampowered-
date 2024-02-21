@@ -6,8 +6,9 @@ public class User {
     private String steamUserName;
     private String steamID;
 
-    public User(String websiteUserName, String steamUserName, String steamID) {
-        this.websiteUserName = websiteUserName;
+    // Uses this constructor when using steam openID
+    // WebsiteUsername will be added later
+    public User(String steamUserName, String steamID) {        
         this.steamUserName = steamUserName;
         this.steamID = steamID;
     }

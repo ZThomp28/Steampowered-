@@ -12,18 +12,21 @@ h1 {
 }
 
 body {
-    background-color: #2A475E;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(42,71,94,1) 80%, rgba(2,44,52,1) 100%);
 }
 
 .top-border {
-    background-color: #171A21;
+    background: rgb(42,71,94);
+    background: radial-gradient(circle, rgba(42,71,94,1) 0%, rgba(0,0,0,1) 62%, rgba(23,26,33,1) 100%);
     padding: 3px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 .bottom-border {
-    background-color: #171A21;
+    background: rgb(42,71,94);
+    background: radial-gradient(circle, rgba(42,71,94,1) 0%, rgba(0,0,0,1) 62%, rgba(23,26,33,1) 100%);
     padding: 3px 15px;
     display: flex;
     justify-content: space-between;
@@ -81,4 +84,38 @@ body, .tab {
 .tab.active, .tab.active a {
     background-color: #66C0F4;
     color: #C7D5E0;
+}
+/* Spinning Wheel Section */
+#wheel {
+    width: 500px;
+    height: 500px;
+    border: 2px solid #333;
+    border-radius: 50%;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+#spin {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    margin: 20px auto;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #1B2838;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px #999;
+}
+
+#spin:hover {
+    background-color: #2A475E;
+}
+
+#spin:active {
+    background-color: #111924;
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
 }
