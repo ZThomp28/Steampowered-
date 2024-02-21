@@ -25,4 +25,6 @@ public class SteampoweredController {
     public String getProfilePage(){
         return "profile";
     }
+
+    
 }
