@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SteampoweredController {
@@ -39,7 +38,7 @@ public class SteampoweredController {
             for (Map.Entry<String, String[]> entry : filteredParameters.entrySet()) {
                 String paramName = entry.getKey();
                 String[] paramValues = entry.getValue();
-    
+
                 System.out.println("Parameter: " + paramName);
                 System.out.print("Values: ");
                 for (String value : paramValues) {
@@ -66,7 +65,7 @@ public class SteampoweredController {
         return "profile";
     }
 
-	@RequestMapping(value="/redirect", method = RequestMethod.GET)
+    @RequestMapping(value="/redirect", method = RequestMethod.GET)
     public ModelAndView runManager(){
         OpenIdManager manager = new OpenIdManager();
         // TODO  change these from localhost after uploading the project to a hosting site
