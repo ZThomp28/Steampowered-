@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SteampoweredApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SteampoweredApplication.class, args);
+		SpringApplication.run(SteampoweredApplication.class, args);		
 	}
 
 }
