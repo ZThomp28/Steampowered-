@@ -25,7 +25,7 @@ public class ParserService {
     // returns an ArrayList of all of the IDs
     public ArrayList<String> getUserLibrary(String userID){
         ArrayList<String> gameIds = new ArrayList<>();
-        // Only set up to format the string as of now
+        
         String apiUrlWithSteamId = String.format(libraryUrl, userID);
 
         try{
