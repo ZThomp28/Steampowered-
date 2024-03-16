@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ParserService {
 
     @Autowired
-    GradeService gradeService;  
+    GameService gameService;  
 
     private String libraryUrl = Constants.USER_LIBRARY_API_URL;  
     private String  playerSummaryUrl = Constants.GET_PLAYER_SUMMARIES_API_URL;
