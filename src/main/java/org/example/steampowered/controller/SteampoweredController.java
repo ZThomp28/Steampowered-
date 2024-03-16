@@ -1,12 +1,6 @@
 package org.example.steampowered.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.example.steampowered.service.OpenIdService;
-import org.expressme.openid.Association;
-import org.expressme.openid.Endpoint;
-import org.expressme.openid.OpenIdManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

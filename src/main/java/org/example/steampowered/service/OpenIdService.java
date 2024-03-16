@@ -65,7 +65,5 @@ public class OpenIdService {
         }    
         // print the id to console
         System.out.println("Steam id: " + steamId);
-    }
-
-    
+    }    
 }
