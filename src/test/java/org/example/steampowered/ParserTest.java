@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.example.steampowered.repository.Parser;
+import org.example.steampowered.service.ParserService;
 import org.junit.jupiter.api.Assertions;
 
 public class ParserTest {
     
     private static String userId = "76561198046659335";
-    private static Parser parser;    
+    private static ParserService parser;    
     
    @BeforeAll
    public static void setUp(){
-    parser = new Parser();
+    parser = new ParserService();
    }
 
     @Test

@@ -1,22 +1,30 @@
-package org.example.steampowered.repository;
+package org.example.steampowered.service;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.example.steampowered.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class Parser {
-    
-    private final String USER_API_URL = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=B6B215A4D22ACEB1D8161A4CB318F136&steamid=%s&format=json&include_appinfo=True&include_played_free_games=True";
+@Service
+public class ParserService {
 
+    @Autowired
+    GradeService gradeService;  
+
+    private String url = Constants.USER_API_URL;   
+    
     // Grabs the user's Library with the steam ID that was acquired with OpenID. 
     // returns an ArrayList of all of the IDs
     public ArrayList<String> getUserLibrary(String userID){
         ArrayList<String> gameIds = new ArrayList<>();
         // Only set up to format the string as of now
-        String apiUrlWithSteamId = String.format(USER_API_URL, userID);
+        String apiUrlWithSteamId = String.format(url, userID);
 
         try{
             URL url = new URL(apiUrlWithSteamId);
