@@ -18,7 +18,8 @@ public class ParserService {
     GameService gameService;  
 
     private String libraryUrl = Constants.USER_LIBRARY_API_URL;  
-    private String  playerSummaryUrl = Constants.GET_PLAYER_SUMMARIES_API_URL;
+    private String  playerSummaryUrl = Constants.PLAYER_SUMMARIES_API_URL;
+    private String appInfoUrl = Constants.APP_INFO_API_URL;
 
     // Grabs the user's Library with the steam ID that was acquired with OpenID. 
     // returns an ArrayList of all of the IDs
