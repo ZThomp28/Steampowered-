@@ -64,6 +64,8 @@ public class OpenIdService {
             }
         }    
         // print the id to console
-        System.out.println("Steam id: " + steamId);
+        // if(steamId != null) {
+        //     System.out.println("Steam id: " + steamId);
+        // }        
     }    
 }
