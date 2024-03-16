@@ -41,8 +41,7 @@ public class ParserService {
         } catch(IOException e) {
             e.printStackTrace();
             System.out.println("Error grabbing user library with Steam ID");
-        }
-        
+        }        
         return gameIds;        
     }
 }
