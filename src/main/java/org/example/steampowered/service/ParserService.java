@@ -17,8 +17,8 @@ public class ParserService {
     @Autowired
     GradeService gradeService;  
 
-    private String url = Constants.USER_API_URL;   
-    
+    private String url = Constants.USER_LIBRARY_API_URL;   
+
     // Grabs the user's Library with the steam ID that was acquired with OpenID. 
     // returns an ArrayList of all of the IDs
     public ArrayList<String> getUserLibrary(String userID){
