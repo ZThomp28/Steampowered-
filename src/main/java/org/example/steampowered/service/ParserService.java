@@ -17,14 +17,15 @@ public class ParserService {
     @Autowired
     GradeService gradeService;  
 
-    private String url = Constants.USER_LIBRARY_API_URL;   
+    private String libraryUrl = Constants.USER_LIBRARY_API_URL;  
+    private String  playerSummaryUrl = Constants.GET_PLAYER_SUMMARIES_API_URL;
 
     // Grabs the user's Library with the steam ID that was acquired with OpenID. 
     // returns an ArrayList of all of the IDs
     public ArrayList<String> getUserLibrary(String userID){
         ArrayList<String> gameIds = new ArrayList<>();
         // Only set up to format the string as of now
-        String apiUrlWithSteamId = String.format(url, userID);
+        String apiUrlWithSteamId = String.format(libraryUrl, userID);
 
         try{
             URL url = new URL(apiUrlWithSteamId);
