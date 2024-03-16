@@ -1,4 +1,4 @@
-package org.example.steampowered;
+package org.example.steampowered.controller;
 
 import java.util.HashMap;
 import java.util.Map;

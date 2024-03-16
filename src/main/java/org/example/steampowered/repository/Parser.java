@@ -1,4 +1,4 @@
-package org.example.steampowered;
+package org.example.steampowered.repository;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,4 +1,4 @@
-package org.example.steampowered;
+package org.example.steampowered.pojo;
 
 public class Game {
 

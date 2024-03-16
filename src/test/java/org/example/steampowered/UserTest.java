@@ -1,5 +1,6 @@
 package org.example.steampowered;
 
+import org.example.steampowered.pojo.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
