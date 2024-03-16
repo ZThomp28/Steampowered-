@@ -14,6 +14,10 @@ import jakarta.servlet.http.HttpServletRequest;
 public class OpenIdService {
 
     private String steamId;
+
+    public String getSteamId() {
+        return steamId;
+    }    
     
     public String activateOpenId() {
         OpenIdManager manager = new OpenIdManager();
