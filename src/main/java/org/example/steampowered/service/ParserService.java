@@ -43,5 +43,5 @@ public class ParserService {
             System.out.println("Error grabbing user library with Steam ID");
         }        
         return gameIds;        
-    }
+    }    
 }
