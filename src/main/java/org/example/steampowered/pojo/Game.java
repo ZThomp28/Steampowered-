@@ -5,11 +5,13 @@ public class Game {
     private String appid;
     private String name;
     private String imgIconURL;
+    private boolean multiplayer;
 
     public Game(String appid, String name, String imgIconURL) {
         this.appid = appid;
         this.name = name;
         this.imgIconURL = imgIconURL;
+        this.multiplayer = false;
     }
 
     public String getAppid() {

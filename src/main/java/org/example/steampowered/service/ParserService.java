@@ -23,10 +23,10 @@ public class ParserService {
 
     // Grabs the user's Library with the steam ID that was acquired with OpenID. 
     // returns an ArrayList of all of the IDs
-    public ArrayList<String> getUserLibrary(String userID){
+    public ArrayList<String> getUserLibraryIds(String userId){
         ArrayList<String> gameIds = new ArrayList<>();
         
-        String apiUrlWithSteamId = String.format(libraryUrl, userID);
+        String apiUrlWithSteamId = String.format(libraryUrl, userId);
 
         try{
             URL url = new URL(apiUrlWithSteamId);
@@ -43,5 +43,24 @@ public class ParserService {
             System.out.println("Error grabbing user library with Steam ID");
         }        
         return gameIds;        
-    }    
+    }  
+    
+    public void getGameDetails(String userId) {
+        ArrayList<String> gameIds = getUserLibraryIds(userId);
+
+        try{
+            for(String id: gameIds) {
+                String gameApi = String.format(appInfoUrl, id);
+                System.out.println(gameApi);
+                URL url = new URL(gameApi);
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(url);
+
+                JsonNode appNodes = root.path("response");
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+            System.out.println("Error grabbing game details");
+        }
+    }
 }
