@@ -1,5 +1,7 @@
 package org.example.steampowered.pojo;
 
+import java.net.URL;
+
 public class Game {
 
     private String appid;

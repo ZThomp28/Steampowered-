@@ -85,7 +85,7 @@ public class ParserService {
                 } 
                 
                 // Print used for testing
-                // System.out.println("Game: " + name + ", multiplayer: " + multiplayer);
+                System.out.println("ID: " + id + ", Game: " + name + ", multiplayer: " + multiplayer + ", img: " + imgIconUrl);
 
                 if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
                     gameService.addGame(new Game(id, name, imgIconUrl, multiplayer));                   
