@@ -24,7 +24,7 @@ public class ParserService {
 
     // Grabs the user's Library with the steam ID that was acquired with OpenID. 
     // returns an ArrayList of all of the IDs
-    public ArrayList<String> getUserLibraryIds(String userId){
+    private ArrayList<String> getUserLibraryIds(String userId){
         ArrayList<String> gameIds = new ArrayList<>();
         
         String apiUrlWithSteamId = String.format(libraryUrl, userId);
@@ -88,8 +88,7 @@ public class ParserService {
                 // System.out.println("Game: " + name + ", multiplayer: " + multiplayer);
 
                 if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
-                    // TODO: change this to use the Spring boot method
-                    Game game = new Game(id, name, imgIconUrl, multiplayer);
+                    gameService.addGame(new Game(id, name, imgIconUrl, multiplayer));                   
                 }
                 
                 
