@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import org.example.steampowered.Constants;
+import org.example.steampowered.pojo.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,16 +48,51 @@ public class ParserService {
     
     public void getGameDetails(String userId) {
         ArrayList<String> gameIds = getUserLibraryIds(userId);
-
+        
         try{
             for(String id: gameIds) {
-                String gameApi = String.format(appInfoUrl, id);
-                System.out.println(gameApi);
+                String gameApi = String.format(appInfoUrl, id);                
                 URL url = new URL(gameApi);
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode root = mapper.readTree(url);
 
-                JsonNode appNodes = root.path("response");
+                if(!root.get(id).get("success").asBoolean()) {
+                    System.out.println("Api call for api ID " + id + " was not successful");
+                    continue;
+                }
+
+                String name = "";
+                String imgIconUrl = "";
+                boolean multiplayer = false;
+
+                JsonNode categoriesNode = root.get(id).get("data").get("categories");
+                if(categoriesNode.isArray()) {
+                    for(JsonNode categoryNode: categoriesNode) {
+                        int categoryId = categoryNode.get("id").asInt();
+                        if(categoryId == 1 || categoryId == 29) {
+                            multiplayer = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(root.get(id).get("data").get("name") != null) {
+                    name = root.get(id).get("data").get("name").asText();
+                }                
+                
+                if(root.get(id).get("data").get("header_image") != null) {
+                    imgIconUrl = root.get(id).get("data").get("header_image").asText();
+                } 
+                
+                // Print used for testing
+                // System.out.println("Game: " + name + ", multiplayer: " + multiplayer);
+
+                if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
+                    // TODO: change this to use the Spring boot method
+                    Game game = new Game(id, name, imgIconUrl, multiplayer);
+                }
+                
+                
             }
         } catch(IOException e) {
             e.printStackTrace();
