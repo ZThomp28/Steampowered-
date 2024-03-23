@@ -35,7 +35,7 @@ public class GameTest {
             //if (mpFlag.equals("Multi-player")) {
             //    mp = true;
             //}
-            g = new Game(ID, name, image);
+            // g = new Game(ID, name, image);
         } catch(Exception e) {
             e.printStackTrace();
         }
