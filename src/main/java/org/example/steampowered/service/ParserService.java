@@ -64,13 +64,18 @@ public class ParserService {
                 String name = "";
                 String imgIconUrl = "";
                 boolean multiplayer = false;
+                boolean crossPlatform = false;
+                String description = "";
 
                 JsonNode categoriesNode = root.get(id).get("data").get("categories");
                 if(categoriesNode.isArray()) {
                     for(JsonNode categoryNode: categoriesNode) {
                         int categoryId = categoryNode.get("id").asInt();
                         if(categoryId == 1 || categoryId == 29) {
-                            multiplayer = true;
+                            multiplayer = true;                            
+                        }
+                        if(categoryId == 27) {
+                            crossPlatform = true;
                             break;
                         }
                     }
@@ -84,12 +89,16 @@ public class ParserService {
                     imgIconUrl = root.get(id).get("data").get("header_image").asText();
                 } 
                 
+                if(root.get(id).get("data").get("short_description") != null) {
+                    description = root.get(id).get("data").get("short_description").asText();
+                } 
+                
                 // Print used for testing
-                System.out.println("ID: " + id + ", Game: " + name + ", multiplayer: " + multiplayer + ", img: " + imgIconUrl);
+                System.out.println("ID: " + id + ", Game: " + name + ", multiplayer: " + multiplayer + " cross plaftorm: " + crossPlatform + ", img: " + imgIconUrl);
 
-                if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
-                    gameService.addGame(new Game(id, name, imgIconUrl, multiplayer));                   
-                }
+                // if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
+                //     gameService.addGame(new Game(id, name, imgIconUrl, multiplayer));                   
+                // }
                 
                 
             }

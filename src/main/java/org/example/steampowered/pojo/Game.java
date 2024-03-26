@@ -8,18 +8,21 @@ public class Game {
     private String name;
     private String imgIconURL;
     private boolean multiplayer;
-    // Games can have multiple genres.  Might need to use an arraylists
-    // private String genre;
+    private boolean crossPlatform;
+    private String shortDescription;
 
-    public Game(String appid, String name, String imgIconURL, boolean multiplayer) {
+    public Game(String appid, String name, String imgIconURL, boolean multiplayer, boolean crossPlatform, String shortDescription) {
         this.appid = appid;
         this.name = name;
         this.imgIconURL = imgIconURL;
-        this.multiplayer = multiplayer;        
+        this.multiplayer = multiplayer;  
+        this.crossPlatform = crossPlatform;
+        this.shortDescription = shortDescription;
     }
 
+
     public String getAppid() {
-        return appid;
+        return this.appid;
     }
 
     public void setAppid(String appid) {
@@ -27,7 +30,7 @@ public class Game {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -35,18 +38,43 @@ public class Game {
     }
 
     public String getImgIconURL() {
-        return imgIconURL;
+        return this.imgIconURL;
     }
 
     public void setImgIconURL(String imgIconURL) {
         this.imgIconURL = imgIconURL;
     }
 
+    public boolean isMultiplayer() {
+        return this.multiplayer;
+    }
+
     public boolean getMultiplayer() {
-        return multiplayer;
+        return this.multiplayer;
     }
 
     public void setMultiplayer(boolean multiplayer) {
         this.multiplayer = multiplayer;
     }
+
+    public boolean isCrossPlatform() {
+        return this.crossPlatform;
+    }
+
+    public boolean getCrossPlatform() {
+        return this.crossPlatform;
+    }
+
+    public void setCrossPlatform(boolean crossPlatform) {
+        this.crossPlatform = crossPlatform;
+    }
+
+    public String getShortDescription() {
+        return this.shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+    
 }
