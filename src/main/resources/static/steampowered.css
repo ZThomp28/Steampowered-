@@ -123,3 +123,31 @@ body, .tab {
 .openid-results{
     display: none;
 }
+
+#reshuffle {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    margin: 20px auto;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #1B2838;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px #999;
+}
+
+#goToGame {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    margin: 20px auto;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #1B2838;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px #999;
+}

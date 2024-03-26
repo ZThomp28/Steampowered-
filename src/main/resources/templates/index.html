@@ -14,9 +14,10 @@
     <div class="tab-bar"> <!-- NAVIGATION BAR -->
         <div class="tab"><a th:href="@{profile}">PROFILE</a></div>
         <div class="tab"><a th:href="@{multiplayer}">MULTIPLAYER</a></div>
-        <div class="tab"><a th:href="@{/redirect}">OpenID</a></div>        
+        <div class="tab"><a th:href="@{/redirect}">OpenID</a></div>
     </div>
 </div>
+
 <div class="content">
     <!-- Spinning Wheel Section -->
     <h2></h2>
@@ -76,17 +77,17 @@ function drawWheel() {
         ctx.fill();
         ctx.stroke();
 
-        // Estimate maximum text width allowed for the section
+        //MAX TEXT WIDTH ALLOWED
         const maxTextWidth = 250 * Math.sin(sectionAngle / 2) * 0.8;
 
-        // Calculate font size based on the actual text width
+        //CALCULATES FONT SIZE
         const fontSize = calculateFontSize(sections[i], ctx, maxTextWidth);
         ctx.font = `${fontSize}px Arial`;
 
-        // Adjust text radius based on font size to position text more centrally for longer texts
-        const baseRadius = 200; // Base radius for text placement
-        const textRadiusAdjustmentFactor = (30 - fontSize) * 3; // Adjust factor based on experimentation
-        const textRadius = baseRadius * 0.5 + textRadiusAdjustmentFactor; // Adjust text radius based on font size
+        //ADJUSTS TEXT PLACEMENT
+        const baseRadius = 200;
+        const textRadiusAdjustmentFactor = (30 - fontSize) * 3;
+        const textRadius = baseRadius * 0.5 + textRadiusAdjustmentFactor;
 
         ctx.fillStyle = '#f7f8fa';
         ctx.textAlign = 'center';
