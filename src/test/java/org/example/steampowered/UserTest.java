@@ -13,8 +13,8 @@ class UserTest {
 
     @BeforeAll
     public static void setUp(){
-        paul = new User("MindOfPaul", "1111");
-        paul.setWebsiteUserName("WebsiteMindOfPaul");
+        // paul = new User("MindOfPaul", "1111");
+        // paul.setWebsiteUserName("WebsiteMindOfPaul");
     }        
 
     @Test
