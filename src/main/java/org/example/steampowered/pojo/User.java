@@ -2,27 +2,22 @@ package org.example.steampowered.pojo;
 
 public class User {
 
-    private String websiteUserName;
+    
     private String steamUserName;
     private String steamID;
+    private String websiteUserName;
+    private String profileImage;
 
-    // Uses this constructor when using steam openID
-    // WebsiteUsername will be added later
-    public User(String steamUserName, String steamID) {        
+
+    public User(String steamUserName, String steamID, String profileImage) {
         this.steamUserName = steamUserName;
         this.steamID = steamID;
-    }
-
-    public String getWebsiteUserName() {
-        return websiteUserName;
-    }
-
-    public void setWebsiteUserName(String websiteUserName) {
-        this.websiteUserName = websiteUserName;
-    }
+        this.websiteUserName = "Placeholder";
+        this.profileImage = profileImage;
+    }  
 
     public String getSteamUserName() {
-        return steamUserName;
+        return this.steamUserName;
     }
 
     public void setSteamUserName(String steamUserName) {
@@ -30,10 +25,27 @@ public class User {
     }
 
     public String getSteamID() {
-        return steamID;
+        return this.steamID;
     }
 
     public void setSteamID(String steamID) {
         this.steamID = steamID;
     }
+
+    public String getWebsiteUserName() {
+        return this.websiteUserName;
+    }
+
+    public void setWebsiteUserName(String websiteUserName) {
+        this.websiteUserName = websiteUserName;
+    }
+
+    public String getProfileImage() {
+        return this.profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+   
 }
