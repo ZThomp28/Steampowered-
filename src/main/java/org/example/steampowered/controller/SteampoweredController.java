@@ -17,9 +17,12 @@ import java.util.Arrays;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class SteampoweredController {
+
 
     List<Game> games = Arrays.asList(
         new Game("400", "Portal", "https://cdn.akamai.steamstatic.com/steam/apps/400/header.jpg?t=1699003695", false),
@@ -31,11 +34,25 @@ public class SteampoweredController {
     @Autowired
     OpenIdService openIdService;
 
+    public SteampoweredController() throws JsonProcessingException {
+    }
+
     @GetMapping("/")
     public String getIndexPage(HttpServletRequest request, Model model){
-        openIdService.filterOpenIdResults(request);        
+        openIdService.filterOpenIdResults(request);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String gamesJson = "[]";
+        try {
+            gamesJson = objectMapper.writeValueAsString(games);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
         model.addAttribute("games", games);
+        model.addAttribute("gamesJson", gamesJson);
         return "index";
+
     }
 
     @GetMapping("/login")
@@ -58,5 +75,6 @@ public class SteampoweredController {
         String url = openIdService.activateOpenId();
         return new ModelAndView("redirect:" + url);
     }
+
 
 }
