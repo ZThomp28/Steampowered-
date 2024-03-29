@@ -38,12 +38,17 @@
         console.log(games);
         console.log(Array.isArray(games));
         /*]]>*/
+        function getRandomSubsetOfGames(games, min = 2, max = 10) {
+            const shuffled = games.sort(() => 0.5 - Math.random());//SHUFFLES THE ARRAY
+            return shuffled.slice(0, Math.max(min, Math.min(shuffled.length, max))); //SLICES THE ARRAY INTO A MIN OF 2 GAMES A MAX OF 10
+        }
     </script>
 <!--CREATION OF WHEEL AREA AND SECTIONS FOR TESTING/SET TO CHANGE -->
 <script>const canvas = document.getElementById('wheelCanvas');
 const ctx = canvas.getContext('2d');
 console.log(games);
-const sections = games.map(games => games.name);
+let currentGamesSubset = getRandomSubsetOfGames(games);
+let sections = currentGamesSubset.map(game => game.name);
 console.log(sections);
 let currentRotation = 0;
 
@@ -185,9 +190,16 @@ function showResultAndButtons(result) {
     reshuffleBtn.id = 'reshuffle';
     reshuffleBtn.innerText = 'Reshuffle ';
     reshuffleBtn.className = 'action-button';
+    document.body.appendChild(reshuffleBtn);
+
     reshuffleBtn.addEventListener('click', function() {
-        // Add logic for what happens when "Reshuffle Games" is clicked
+        currentGamesSubset = getRandomSubsetOfGames(games); //NEW RANDOM SUBSET CHOSEN
+        sections = currentGamesSubset.map(game => game.name); //SECTIONS UPDATED
+
+        //FOR TESTING
         console.log('Reshuffling games...');
+        console.log(sections);
+        drawWheel();
     });
 
     //GO TO GAME BUTTON
@@ -198,7 +210,7 @@ function showResultAndButtons(result) {
     goToGameBtn.addEventListener('click', function() {
         const imgDisplayArea = document.getElementById('imgDisplayArea');
 
-
+        //DRAGS USERS SCREEN DOWN IN ORDER TO SEE GAME INFORMATION
         if (imgDisplayArea) {
             imgDisplayArea.scrollIntoView({ behavior: 'smooth' });
         } else {
