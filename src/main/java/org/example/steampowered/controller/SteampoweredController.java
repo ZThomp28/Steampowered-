@@ -34,9 +34,6 @@ public class SteampoweredController {
     @Autowired
     OpenIdService openIdService;
 
-    public SteampoweredController() throws JsonProcessingException {
-    }
-
     @GetMapping("/")
     public String getIndexPage(HttpServletRequest request, Model model){
         openIdService.filterOpenIdResults(request);
