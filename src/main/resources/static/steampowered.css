@@ -188,6 +188,15 @@ body, .tab {
     border-radius: 5px;
     box-shadow: 0 4px #999;
 }
+#reshuffle:hover {
+    background-color: #2A475E;
+}
+
+#reshuffle:active {
+    background-color: #111924;
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
+}
 
 #goToGame {
     display: block;
@@ -201,4 +210,13 @@ body, .tab {
     border: none;
     border-radius: 5px;
     box-shadow: 0 4px #999;
+}
+#goToGame:hover {
+    background-color: #2A475E;
+}
+
+#goToGame:active {
+    background-color: #111924;
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
 }

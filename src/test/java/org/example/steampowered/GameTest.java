@@ -14,7 +14,7 @@ public class GameTest {
     public static String STEAM_URL = "https://store.steampowered.com/api/appdetails?appids=";
     String appid = "730";
 
-    //counter strike 2 JSON
+    //counter-strike 2 JSON
     //https://store.steampowered.com/api/appdetails?appids=730&l=en
 
     public static Game getGameFromSteam(String appID) {
