@@ -1,9 +1,13 @@
 package org.example.steampowered.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.example.steampowered.pojo.Game;
+import org.example.steampowered.pojo.User;
 import org.example.steampowered.service.OpenIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,12 +47,21 @@ public class SteampoweredController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String gamesJson = "[]";
+        String steamId = openIdService.getSteamId();
         try {
             gamesJson = objectMapper.writeValueAsString(games);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
+        if(steamId != null) {
+            try {
+                User userInfo = openIdService.steamUserDisplay(steamId);
+                model.addAttribute("profileImage", userInfo.getProfileImage());
+                model.addAttribute("steamUserName", userInfo.getSteamUserName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         model.addAttribute("games", games);
         model.addAttribute("gamesJson", gamesJson);
         return "index";
@@ -61,12 +74,23 @@ public class SteampoweredController {
     }
 
     @GetMapping("/multiplayer")
-    public String getMultiplayerPage(){
-        return "multiplayer";
-    }
+    public String getMultiplayerPage(){ return "multiplayer"; }
 
     @GetMapping("/profile")
-    public String getProfilePage(){
+    public String getProfilePage(HttpServletRequest request, Model model){
+        openIdService.filterOpenIdResults(request);
+        String steamId = openIdService.getSteamId();
+
+
+        if(steamId != null) {
+            try {
+                User userInfo = openIdService.steamUserDisplay(steamId);
+                model.addAttribute("profileImage", userInfo.getProfileImage());
+                model.addAttribute("steamUserName", userInfo.getSteamUserName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return "profile";
     }
 
@@ -77,4 +101,11 @@ public class SteampoweredController {
     }
 
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+
+        request.getSession().invalidate();
+
+        return "redirect:/";
+    }
 }
