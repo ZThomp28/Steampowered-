@@ -8,6 +8,10 @@ public class User {
     private String websiteUserName;
     private String profileImage;
 
+    public User(){
+        
+    }
+
 
     public User(String steamUserName, String steamID, String profileImage) {
         this.steamUserName = steamUserName;
@@ -46,6 +50,11 @@ public class User {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    @Override
+    public String toString() {
+        return "Steam Id: " + steamID + "\nUsername: " + steamUserName + "\nprofile link: " + profileImage;
     }
    
 }

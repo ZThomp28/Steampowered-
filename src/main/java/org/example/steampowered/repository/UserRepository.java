@@ -9,22 +9,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserRepository {
 
-    private List<User> users = new ArrayList<>();
+    User user = new User();      
 
-    public List<User> users() {
-        return users;
+    public User getUser() {
+        return this.user;
+    }    
+
+    public void nullUser(){
+        this.user = null;
     }
-
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    public User getUser(int index) {
-        return users.get(index);
-    }
-
-
-
-
-    
 }

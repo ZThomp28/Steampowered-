@@ -79,15 +79,15 @@ public class SteampoweredController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        // if(steamId != null) {
-        //     try {
-        //         User userInfo = openIdService.getSteamUserDisplay(steamId);
-        //         model.addAttribute("profileImage", userInfo.getProfileImage());
-        //         model.addAttribute("steamUserName", userInfo.getSteamUserName());
-        //     } catch (IOException e) {
-        //         e.printStackTrace();
-        //     }
-        // }
+        if(steamId != null) {
+            try {
+                User userInfo = openIdService.getSteamUserDisplay(steamId);
+                model.addAttribute("profileImage", userInfo.getProfileImage());
+                model.addAttribute("steamUserName", userInfo.getSteamUserName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         model.addAttribute("user", user);
         model.addAttribute("games", games);
         model.addAttribute("gamesJson", gamesJson);
@@ -106,7 +106,7 @@ public class SteampoweredController {
     @GetMapping("/profile")
     public String getProfilePage(HttpServletRequest request, Model model){
         openIdService.filterOpenIdResults(request);
-        String steamId = openIdService.getSteamId();
+        // String steamId = openIdService.getSteamId();
 
 
         // if(steamId != null) {

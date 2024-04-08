@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class GameService {    
 
     @Autowired
-    GameRepository gameRepository;
+    GameRepository gameRepository;    
 
     public List<Game> getGames() {
         return gameRepository.getGames();
