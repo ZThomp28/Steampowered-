@@ -2,13 +2,17 @@
 package org.example.steampowered.service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpSession;
 import org.example.steampowered.pojo.User;
+import org.example.steampowered.repository.UserRepository;
 import org.expressme.openid.Association;
 import org.expressme.openid.Endpoint;
 import org.expressme.openid.OpenIdManager;
@@ -27,8 +31,7 @@ public class OpenIdService {
     public String getSteamId(){
         return this.steamId;
     }
-    @Autowired
-    private UserService userService;
+    
     
     public String activateOpenId() {
         OpenIdManager manager = new OpenIdManager();
@@ -81,10 +84,7 @@ public class OpenIdService {
         
     }
 
-    public void getSteamUserDisplay (String steamId) throws IOException {
-//        if (steamId == null || steamId.isEmpty()) {
-//            return null; // Return null if steamId is not provided
-//        }
+    public User getSteamUserDisplay (String steamId) throws IOException {
         String apiUrl = String.format(PLAYER_SUMMARIES_API_URL, steamId);
 
         URL url = new URL(apiUrl);
@@ -92,27 +92,12 @@ public class OpenIdService {
         JsonNode jsonResponse = objectMapper.readTree(url);
 
         JsonNode playerInfo = jsonResponse.get("response").get("players").get(0);
+
         String profileImage = playerInfo.get("avatarmedium").asText();
         String steamUserName = playerInfo.get("personaname").asText();     
-
-
-        userService.getUser().setSteamUserName(steamUserName);
-        userService.getUser().setProfileImage(profileImage);
-        userService.getUser().setSteamID(steamId);
-
-
-
-        /*Create object in the openidservice getSteamUserDisplay,
-
-        @Autowired in public class OpenIdservice()
-
-        Userservice userservice;
-
-        then add the userService.addUser(new User(steamUserName, steamId, profileImage));
-        then have it where the model can just call it from an array list so that you do not have to
-        add the if statement for all the mapping/model.
-
-         */
+        
+        return new User(steamUserName, steamId, profileImage);
     }
+
 
 }
