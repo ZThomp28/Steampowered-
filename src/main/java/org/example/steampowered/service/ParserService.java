@@ -18,8 +18,7 @@ public class ParserService {
     @Autowired
     GameService gameService;  
 
-    private String libraryUrl = Constants.USER_LIBRARY_API_URL;  
-    private String  playerSummaryUrl = Constants.PLAYER_SUMMARIES_API_URL;
+    private String libraryUrl = Constants.USER_LIBRARY_API_URL;      
     private String appInfoUrl = Constants.APP_INFO_API_URL;
 
     // Grabs the user's Library with the steam ID that was acquired with OpenID. 
@@ -47,8 +46,11 @@ public class ParserService {
     }  
     
     public void getGameDetails(String userId) {
+        // Populate the arraylist by calling getUserLibraryId
         ArrayList<String> gameIds = getUserLibraryIds(userId);
         
+        // Game Details API only takes one ID at a time, so we have to loop through all of the IDs and
+        // grab the details individually
         try{
             for(String id: gameIds) {
                 String gameApi = String.format(appInfoUrl, id);                
@@ -66,7 +68,9 @@ public class ParserService {
                 boolean multiplayer = false;
                 boolean crossPlatform = false;
                 String description = "";
-
+                
+                // Categories such as multiplayer are stored in a sub header called "categories"
+                //  1 = Multiplayer, 29 = MMO, 27 = Cross Platform
                 JsonNode categoriesNode = root.get(id).get("data").get("categories");
                 if(categoriesNode.isArray()) {
                     for(JsonNode categoryNode: categoriesNode) {
@@ -96,8 +100,9 @@ public class ParserService {
                 // Print used for testing
                 System.out.println("ID: " + id + ", Game: " + name + ", multiplayer: " + multiplayer + " cross plaftorm: " + crossPlatform + ", img: " + imgIconUrl);
 
+                // Make sure no details are missing and 
                 if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
-                    gameService.addGame(new Game(id, name, imgIconUrl, multiplayer, crossPlatform, description));                   
+                    gameService.addGame(new Game(id, name, imgIconUrl, description));                   
                 }               
                 
             }

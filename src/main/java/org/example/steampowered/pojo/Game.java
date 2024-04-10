@@ -1,22 +1,19 @@
 package org.example.steampowered.pojo;
 
-import java.net.URL;
 
 public class Game {
 
     private String appid;
     private String name;
     private String imgIconURL;
-    private boolean multiplayer;
-    private boolean crossPlatform;
+    // private boolean multiplayer;
+    // private boolean crossPlatform;
     private String shortDescription;
 
-    public Game(String appid, String name, String imgIconURL, boolean multiplayer, boolean crossPlatform, String shortDescription) {
+    public Game(String appid, String name, String imgIconURL,  String shortDescription) {
         this.appid = appid;
         this.name = name;
-        this.imgIconURL = imgIconURL;
-        this.multiplayer = multiplayer;  
-        this.crossPlatform = crossPlatform;
+        this.imgIconURL = imgIconURL;       
         this.shortDescription = shortDescription;
     }
 
@@ -45,29 +42,29 @@ public class Game {
         this.imgIconURL = imgIconURL;
     }
 
-    public boolean isMultiplayer() {
-        return this.multiplayer;
-    }
+    // public boolean isMultiplayer() {
+    //     return this.multiplayer;
+    // }
 
-    public boolean getMultiplayer() {
-        return this.multiplayer;
-    }
+    // public boolean getMultiplayer() {
+    //     return this.multiplayer;
+    // }
 
-    public void setMultiplayer(boolean multiplayer) {
-        this.multiplayer = multiplayer;
-    }
+    // public void setMultiplayer(boolean multiplayer) {
+    //     this.multiplayer = multiplayer;
+    // }
 
-    public boolean isCrossPlatform() {
-        return this.crossPlatform;
-    }
+    // public boolean isCrossPlatform() {
+    //     return this.crossPlatform;
+    // }
 
-    public boolean getCrossPlatform() {
-        return this.crossPlatform;
-    }
+    // public boolean getCrossPlatform() {
+    //     return this.crossPlatform;
+    // }
 
-    public void setCrossPlatform(boolean crossPlatform) {
-        this.crossPlatform = crossPlatform;
-    }
+    // public void setCrossPlatform(boolean crossPlatform) {
+    //     this.crossPlatform = crossPlatform;
+    // }
 
     public String getShortDescription() {
         return this.shortDescription;
