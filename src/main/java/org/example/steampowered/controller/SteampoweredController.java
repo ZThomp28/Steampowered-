@@ -8,7 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.example.steampowered.pojo.Game;
 import org.example.steampowered.pojo.User;
+import org.example.steampowered.repository.UserRepository;
 import org.example.steampowered.service.OpenIdService;
+import org.example.steampowered.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,7 +69,10 @@ public class SteampoweredController {
     @Autowired
     OpenIdService openIdService;
 
-    @GetMapping("/")
+    @Autowired
+    UserService userService;
+
+    @GetMapping("/index")
     public String getIndexPage(HttpServletRequest request, Model model){
         openIdService.filterOpenIdResults(request);
 
@@ -79,26 +84,18 @@ public class SteampoweredController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        //model.addAttribute("user", user);
 
-        if(steamId != null) {
-            try {
-                User userInfo = openIdService.getSteamUserDisplay(steamId);
-                model.addAttribute("profileImage", userInfo.getProfileImage());
-                model.addAttribute("steamUserName", userInfo.getSteamUserName());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        //model.addAttribute("user", user);
+        model.addAttribute("user", userService.getUser());
         model.addAttribute("games", games);
         model.addAttribute("gamesJson", gamesJson);
         return "index";
 
     }
 
-    @GetMapping("/login")
-    public String getLoginPage(){
+    //Add the openIDservice stuff in here including the https
+    @GetMapping("/")
+    public String getLoginPage(HttpServletRequest request, Model model){
+        openIdService.filterOpenIdResults(request);
         return "login";
     }
 
@@ -111,15 +108,15 @@ public class SteampoweredController {
         String steamId = openIdService.getSteamId();
 
 
-         if(steamId != null) {
-             try {
-                 User userInfo = openIdService.getSteamUserDisplay(steamId);
-                 model.addAttribute("profileImage", userInfo.getProfileImage());
-                 model.addAttribute("steamUserName", userInfo.getSteamUserName());
-             } catch (IOException e) {
-                 e.printStackTrace();
-             }
-         }
+//         if(steamId != null) {
+//             try {
+//                 User userInfo = openIdService.getSteamUserDisplay(steamId);
+//                 model.addAttribute("profileImage", userInfo.getProfileImage());
+//                 model.addAttribute("steamUserName", userInfo.getSteamUserName());
+//             } catch (IOException e) {
+//                 e.printStackTrace();
+//             }
+//         }
 
         //model.addAttribute("user", user);
         return "profile";
