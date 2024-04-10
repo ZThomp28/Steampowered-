@@ -73,8 +73,8 @@ public class SteampoweredController {
     UserService userService;
 
     @GetMapping("/index")
-    public String getIndexPage(HttpServletRequest request, Model model){
-        openIdService.filterOpenIdResults(request);
+    public String getIndexPage( Model model){
+        
 
         ObjectMapper objectMapper = new ObjectMapper();
         String gamesJson = "[]";
@@ -94,7 +94,7 @@ public class SteampoweredController {
 
     //Add the openIDservice stuff in here including the https
     @GetMapping("/")
-    public String getLoginPage(HttpServletRequest request, Model model){
+    public String getLoginPage(HttpServletRequest request, Model model){        
         openIdService.filterOpenIdResults(request);
         return "login";
     }
@@ -104,21 +104,7 @@ public class SteampoweredController {
 
     @GetMapping("/profile")
     public String getProfilePage(HttpServletRequest request, Model model){
-        openIdService.filterOpenIdResults(request);
-        String steamId = openIdService.getSteamId();
-
-
-//         if(steamId != null) {
-//             try {
-//                 User userInfo = openIdService.getSteamUserDisplay(steamId);
-//                 model.addAttribute("profileImage", userInfo.getProfileImage());
-//                 model.addAttribute("steamUserName", userInfo.getSteamUserName());
-//             } catch (IOException e) {
-//                 e.printStackTrace();
-//             }
-//         }
-
-        //model.addAttribute("user", user);
+        openIdService.filterOpenIdResults(request);            
         return "profile";
     }
 
