@@ -85,6 +85,9 @@ public class OpenIdService {
     }
 
     public User getSteamUserDisplay (String steamId) throws IOException {
+        if (steamId == null || steamId.isEmpty()) {
+            return null; // Return null if steamId is not provided
+        }
         String apiUrl = String.format(PLAYER_SUMMARIES_API_URL, steamId);
 
         URL url = new URL(apiUrl);
@@ -98,4 +101,5 @@ public class OpenIdService {
 
         return new User(steamUserName, steamId, profileImage);
     }
+
 }
