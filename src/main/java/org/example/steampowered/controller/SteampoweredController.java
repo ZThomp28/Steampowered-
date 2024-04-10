@@ -8,9 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.example.steampowered.pojo.Game;
 import org.example.steampowered.pojo.User;
-import org.example.steampowered.repository.UserRepository;
 import org.example.steampowered.service.OpenIdService;
-import org.example.steampowered.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,15 +62,12 @@ public class SteampoweredController {
 
     );
 
-    //User user = new User("MindOfPaul", "76561198046659335", "https://avatars.steamstatic.com/e7ceb08d9799a78adb8b62cc39c695549e2a6c47_medium.jpg");
+    User user = new User("MindOfPaul", "76561198046659335", "https://avatars.steamstatic.com/e7ceb08d9799a78adb8b62cc39c695549e2a6c47_medium.jpg");
 
     @Autowired
     OpenIdService openIdService;
 
-    @Autowired
-    UserService userService;
-
-    @GetMapping("/index")
+    @GetMapping("/")
     public String getIndexPage(HttpServletRequest request, Model model){
         openIdService.filterOpenIdResults(request);
 
@@ -84,18 +79,24 @@ public class SteampoweredController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
-        model.addAttribute("user", userService.getUser());
+        if(steamId != null) {
+            try {
+                User userInfo = openIdService.getSteamUserDisplay(steamId);
+                model.addAttribute("profileImage", userInfo.getProfileImage());
+                model.addAttribute("steamUserName", userInfo.getSteamUserName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        model.addAttribute("user", user);
         model.addAttribute("games", games);
         model.addAttribute("gamesJson", gamesJson);
         return "index";
 
     }
 
-    //Add the openIDservice stuff in here including the https
-    @GetMapping("/")
-    public String getLoginPage(HttpServletRequest request, Model model){
-        openIdService.filterOpenIdResults(request);
+    @GetMapping("/login")
+    public String getLoginPage(){
         return "login";
     }
 
@@ -105,24 +106,24 @@ public class SteampoweredController {
     @GetMapping("/profile")
     public String getProfilePage(HttpServletRequest request, Model model){
         openIdService.filterOpenIdResults(request);
-        String steamId = openIdService.getSteamId();
+        // String steamId = openIdService.getSteamId();
 
 
-//         if(steamId != null) {
-//             try {
-//                 User userInfo = openIdService.getSteamUserDisplay(steamId);
-//                 model.addAttribute("profileImage", userInfo.getProfileImage());
-//                 model.addAttribute("steamUserName", userInfo.getSteamUserName());
-//             } catch (IOException e) {
-//                 e.printStackTrace();
-//             }
-//         }
+        // if(steamId != null) {
+        //     try {
+        //         User userInfo = openIdService.getSteamUserDisplay(steamId);
+        //         model.addAttribute("profileImage", userInfo.getProfileImage());
+        //         model.addAttribute("steamUserName", userInfo.getSteamUserName());
+        //     } catch (IOException e) {
+        //         e.printStackTrace();
+        //     }
+        // }
 
-        //model.addAttribute("user", user);
+        model.addAttribute("user", user);
         return "profile";
     }
 
-    @RequestMapping(value="/redirect", method = RequestMethod.POST)
+    @RequestMapping(value="/redirect", method = RequestMethod.GET)
     public ModelAndView runManager(){
         String url = openIdService.activateOpenId();
         return new ModelAndView("redirect:" + url);

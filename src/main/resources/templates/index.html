@@ -7,26 +7,24 @@
 </head>
 <body>
     <!--Used to grab the values from steam openID-->
-    <tr class="openid-results" th:each="entry : ${parameters}"></tr>
+    <tr class="openid-results" th:each="entry : ${parameters}">        
+    </tr>
 <div class="top-border">
     <h1>SteamPowered</h1> <!-- TITLE TEXT -->
     <div class="tab-bar" th:object="${user}"> <!-- NAVIGATION BAR -->
         <div class="tab"><a th:href="@{profile}">PROFILE</a></div>
         <div class="tab"><a th:href="@{multiplayer}">MULTIPLAYER</a></div>
-        <div class="tab"><a th:href="@{login}">LOGIN</a></div>
-        <div th:if="${user.steamUserName}">
-            <h3 th:text="${user.steamUserName}"></h3>
-            <img th:src="${user.profileImage}" alt="Steam Avatar">
+        <div th:if="${steamUserName}">
+            <h3 th:text="${steamUserName}"></h3>
+            <img th:src="${profileImage}" alt="Steam Avatar">
             <span style = "float:right;" class = "tab"><a th:href="@{logout}">Logout</a></span>
         </div>
         <!-- If not logged in, display Steam login button -->
-
-        <div th:unless="${user.steamUserName}">
+        <div th:unless="${steamUserName}">
             <div>
                 <a th:href="@{/redirect}"><img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png" alt="Steam Login"></a>
             </div>
         </div>
-
 
     </div>
 </div>
