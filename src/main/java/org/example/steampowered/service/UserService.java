@@ -13,16 +13,12 @@ public class UserService {
     @Autowired
     UserRepository userRepository = new UserRepository();
 
-    public List<User> getUsers() {
-        return userRepository.users();
+    public User getUser(){
+        return userRepository.getUser();
     }
 
-    public void addUser(User user) {
-        userRepository.addUser(user);
-    }
-
-    public User getUser(int index) {
-        return userRepository.getUser(index);
+    public void nullUser(){
+        userRepository.nullUser();
     }
     
 }

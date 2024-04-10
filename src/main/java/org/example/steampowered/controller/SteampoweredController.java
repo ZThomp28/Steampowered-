@@ -80,6 +80,17 @@ public class SteampoweredController {
             e.printStackTrace();
         }
         //model.addAttribute("user", user);
+
+        if(steamId != null) {
+            try {
+                User userInfo = openIdService.getSteamUserDisplay(steamId);
+                model.addAttribute("profileImage", userInfo.getProfileImage());
+                model.addAttribute("steamUserName", userInfo.getSteamUserName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //model.addAttribute("user", user);
         model.addAttribute("games", games);
         model.addAttribute("gamesJson", gamesJson);
         return "index";

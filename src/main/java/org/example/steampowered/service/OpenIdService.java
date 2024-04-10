@@ -12,9 +12,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.example.steampowered.pojo.User;
+import org.example.steampowered.repository.UserRepository;
 import org.expressme.openid.Association;
 import org.expressme.openid.Endpoint;
 import org.expressme.openid.OpenIdManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,9 +28,10 @@ public class OpenIdService {
 
     private String steamId;
 
-    public String getSteamId() {
-        return steamId;
-    }    
+    public String getSteamId(){
+        return this.steamId;
+    }
+    
     
     public String activateOpenId() {
         OpenIdManager manager = new OpenIdManager();
@@ -78,10 +81,7 @@ public class OpenIdService {
                 steamId = parts[parts.length - 1];
             }
         }    
-        // print the id to console
-        // if(steamId != null) {
-        //     System.out.println("Steam id: " + steamId);
-        // }
+        
     }
 
     public User getSteamUserDisplay (String steamId) throws IOException {
@@ -95,10 +95,9 @@ public class OpenIdService {
         JsonNode jsonResponse = objectMapper.readTree(url);
 
         JsonNode playerInfo = jsonResponse.get("response").get("players").get(0);
-
         String profileImage = playerInfo.get("avatarmedium").asText();
-        String steamUserName = playerInfo.get("personaname").asText();
-
+        String steamUserName = playerInfo.get("personaname").asText();     
+        
         return new User(steamUserName, steamId, profileImage);
     }
 
