@@ -18,7 +18,9 @@ public class UserService {
     }
 
     public void nullUser(){
-        userRepository.nullUser();
+        userRepository.getUser().setProfileImage("");
+        userRepository.getUser().setSteamID("");
+        userRepository.getUser().setSteamUserName("");
     }
     
 }
