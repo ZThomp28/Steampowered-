@@ -7,6 +7,9 @@ import org.example.steampowered.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Service
 public class GameService {    
 
@@ -28,4 +31,17 @@ public class GameService {
     public void deleteGame(int index) {
         gameRepository.deleteGame(index);
     }
+
+    public String getGamesAsJson(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        String gamesJson = "[]";
+
+        try {
+            gamesJson = objectMapper.writeValueAsString(getGames());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return gamesJson;
+    }
+    
 }

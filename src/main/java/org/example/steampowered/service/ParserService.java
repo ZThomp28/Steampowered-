@@ -96,15 +96,14 @@ public class ParserService {
                 // Print used for testing
                 System.out.println("ID: " + id + ", Game: " + name + ", multiplayer: " + multiplayer + " cross plaftorm: " + crossPlatform + ", img: " + imgIconUrl);
 
-                // if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
-                //     gameService.addGame(new Game(id, name, imgIconUrl, multiplayer));                   
-                // }
-                
+                if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
+                    gameService.addGame(new Game(id, name, imgIconUrl, multiplayer, crossPlatform, description));                   
+                }               
                 
             }
         } catch(IOException e) {
             e.printStackTrace();
             System.out.println("Error grabbing game details");
         }
-    }
+    }    
 }
