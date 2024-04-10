@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.example.steampowered.pojo.Game;
 import org.example.steampowered.pojo.User;
-import org.example.steampowered.repository.UserRepository;
 import org.example.steampowered.service.OpenIdService;
 import org.example.steampowered.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ public class SteampoweredController {
 
     );
 
-    //User user = new User("MindOfPaul", "76561198046659335", "https://avatars.steamstatic.com/e7ceb08d9799a78adb8b62cc39c695549e2a6c47_medium.jpg");
+    User user = new User("MindOfPaul", "76561198046659335", "https://avatars.steamstatic.com/e7ceb08d9799a78adb8b62cc39c695549e2a6c47_medium.jpg");
 
     @Autowired
     OpenIdService openIdService;
@@ -73,29 +72,27 @@ public class SteampoweredController {
     UserService userService;
 
     @GetMapping("/index")
-    public String getIndexPage( Model model){
-        
+    public String getIndexPage(HttpServletRequest request, Model model) throws IOException{
+        openIdService.filterOpenIdResults(request);
+
 
         ObjectMapper objectMapper = new ObjectMapper();
         String gamesJson = "[]";
-        String steamId = openIdService.getSteamId();
+        
         try {
             gamesJson = objectMapper.writeValueAsString(games);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
-        model.addAttribute("user", userService.getUser());
-        model.addAttribute("games", games);
+        
+        model.addAttribute("user", userService.getUser());        
         model.addAttribute("gamesJson", gamesJson);
         return "index";
-
     }
 
-    //Add the openIDservice stuff in here including the https
+
     @GetMapping("/")
-    public String getLoginPage(HttpServletRequest request, Model model){        
-        openIdService.filterOpenIdResults(request);
+    public String getLoginPage(HttpServletRequest request){        
         return "login";
     }
 
@@ -103,12 +100,12 @@ public class SteampoweredController {
     public String getMultiplayerPage(){ return "multiplayer"; }
 
     @GetMapping("/profile")
-    public String getProfilePage(HttpServletRequest request, Model model){
-        openIdService.filterOpenIdResults(request);            
+    public String getProfilePage(HttpServletRequest request, Model model){            
+        model.addAttribute("user", userService.getUser());
         return "profile";
     }
 
-    @RequestMapping(value="/redirect", method = RequestMethod.POST)
+    @RequestMapping(value="/redirect", method = RequestMethod.GET)
     public ModelAndView runManager(){
         String url = openIdService.activateOpenId();
         return new ModelAndView("redirect:" + url);
@@ -117,9 +114,7 @@ public class SteampoweredController {
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-
         request.getSession().invalidate();
-
         return "redirect:/";
     }
 }

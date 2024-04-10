@@ -2,13 +2,17 @@
 package org.example.steampowered.service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpSession;
 import org.example.steampowered.pojo.User;
+import org.example.steampowered.repository.UserRepository;
 import org.expressme.openid.Association;
 import org.expressme.openid.Endpoint;
 import org.expressme.openid.OpenIdManager;
@@ -22,18 +26,15 @@ import static org.example.steampowered.Constants.PLAYER_SUMMARIES_API_URL;
 @Service
 public class OpenIdService {
 
-    private String steamId;
-
-    public String getSteamId(){
-        return this.steamId;
-    }
     @Autowired
-    private UserService userService;
+    UserService userService;
+
+    private String steamId;
     
     public String activateOpenId() {
         OpenIdManager manager = new OpenIdManager();
         // TODO  change these from localhost after uploading the project to a hosting site
-        manager.setReturnTo("http://localhost:8080");
+        manager.setReturnTo("http://localhost:8080/index");
         manager.setRealm("http://localhost:8080");
 
         Endpoint endpoint = manager.lookupEndpoint("https://steamcommunity.com/openid/");      
@@ -42,7 +43,7 @@ public class OpenIdService {
         return url;        
     }
 
-    public void filterOpenIdResults(HttpServletRequest request) {
+    public void filterOpenIdResults(HttpServletRequest request) throws IOException {
         // When the openID returns the user to the index page, grab the values from the nav bar
         Map<String, String[]> parameterMap = request.getParameterMap();     
         
@@ -78,13 +79,12 @@ public class OpenIdService {
                 steamId = parts[parts.length - 1];
             }
         }    
+
+        getSteamUserDisplay(steamId);
         
     }
 
     public void getSteamUserDisplay (String steamId) throws IOException {
-//        if (steamId == null || steamId.isEmpty()) {
-//            return null; // Return null if steamId is not provided
-//        }
         String apiUrl = String.format(PLAYER_SUMMARIES_API_URL, steamId);
 
         URL url = new URL(apiUrl);
@@ -92,27 +92,14 @@ public class OpenIdService {
         JsonNode jsonResponse = objectMapper.readTree(url);
 
         JsonNode playerInfo = jsonResponse.get("response").get("players").get(0);
+
         String profileImage = playerInfo.get("avatarmedium").asText();
         String steamUserName = playerInfo.get("personaname").asText();     
-
-
+        
         userService.getUser().setSteamUserName(steamUserName);
         userService.getUser().setProfileImage(profileImage);
         userService.getUser().setSteamID(steamId);
-
-
-
-        /*Create object in the openidservice getSteamUserDisplay,
-
-        @Autowired in public class OpenIdservice()
-
-        Userservice userservice;
-
-        then add the userService.addUser(new User(steamUserName, steamId, profileImage));
-        then have it where the model can just call it from an array list so that you do not have to
-        add the if statement for all the mapping/model.
-
-         */
     }
+
 
 }
