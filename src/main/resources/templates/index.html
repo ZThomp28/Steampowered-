@@ -19,8 +19,11 @@
 </div>
 
 <div class="content">
-    <!-- Spinning Wheel Section -->
     <h2></h2>
+    <div id="genreMenu" style="position: absolute; left: 20px; top: 100px;">
+        <!--GENRE CHECKBOX-->
+    </div>
+    <!-- WHEEL SPINNING SECTION -->
     <div id="wheel">
         <canvas id="wheelCanvas" width="500" height="500"></canvas>
     </div>
@@ -28,7 +31,7 @@
     <p id="result" style="text-align:center; font-size:20px;"></p>
 </div>
 
-<div class="bottom-border"></div>
+
 <!--READS JSON ATTRIBUTE FROM THE CONTROLLER AS AN ARRAY -->
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -43,7 +46,28 @@
             return shuffled.slice(0, Math.max(min, Math.min(shuffled.length, max))); //SLICES THE ARRAY INTO A MIN OF 2 GAMES A MAX OF 10
         }
     </script>
-<!--CREATION OF WHEEL AREA AND SECTIONS FOR TESTING/SET TO CHANGE -->
+    <!--CREATION OF GENRE MENU -->
+    <script>
+        const genres = ["Action", "Adventure", "RPG", "Simulation", "Strategy", "Puzzle"];
+        const genreMenu = document.getElementById('genreMenu');
+        //TITLE ON BOX
+        const menuTitle = document.createElement('h3');
+        menuTitle.textContent = 'Genre Filter';
+        menuTitle.style.marginBottom = '10px';
+        menuTitle.style.fontFamily = "Arial", "sans-serif";
+        genreMenu.appendChild(menuTitle);
+        //GENRES GET PLACED ONE BY ONE
+        genres.forEach((genre) => {
+            const label = document.createElement('label');
+            label.style.display = 'block';
+            label.innerHTML = `
+        <input type="checkbox" name="genres" value="${genre}">
+        ${genre}
+    `;
+            genreMenu.appendChild(label);
+        });
+    </script>
+    <!--CREATION OF WHEEL AREA AND SECTIONS FOR TESTING/SET TO CHANGE -->
 <script>const canvas = document.getElementById('wheelCanvas');
 const ctx = canvas.getContext('2d');
 console.log(games);
@@ -52,7 +76,22 @@ let sections = currentGamesSubset.map(game => game.name);
 console.log(sections);
 let currentRotation = 0;
 
+//CREATES INITIAL RESHUFFLE BUTTON
+const reshuffleBtn = document.createElement('button');
+reshuffleBtn.id = 'reshuffle';
+reshuffleBtn.innerText = 'Reshuffle ';
+reshuffleBtn.className = 'action-button';
+document.body.appendChild(reshuffleBtn);
 
+reshuffleBtn.addEventListener('click', function() {
+    currentGamesSubset = getRandomSubsetOfGames(games); //NEW RANDOM SUBSET CHOSEN
+    sections = currentGamesSubset.map(game => game.name); //SECTIONS UPDATED
+
+    //FOR TESTING
+    console.log('Reshuffling games...');
+    console.log(sections);
+    drawWheel();
+});
 //WHEEL CREATION
 function calculateFontSize(text, ctx, maxTextWidth) {
     let fontSize = 20; //BASE FONT SIZE
@@ -106,7 +145,7 @@ function drawWheel() {
 
 //ARROW POINTER
 function drawArrow() {
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#FFF';
     ctx.beginPath();
     ctx.moveTo(500, 250);
     ctx.lineTo(470, 230);

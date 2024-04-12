@@ -167,3 +167,17 @@ body, .tab {
     box-shadow: 0 2px #666;
     transform: translateY(2px);
 }
+
+#genreMenu {
+    background-color: #1B2838;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+}
+
+#genreMenu label {
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
