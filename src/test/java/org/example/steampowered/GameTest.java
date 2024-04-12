@@ -12,7 +12,7 @@ import java.net.URL;
 public class GameTest {
 
     public static String STEAM_URL = "https://store.steampowered.com/api/appdetails?appids=";
-    String appid = "730";
+    String appId = "730";
 
     //counter-strike 2 JSON
     //https://store.steampowered.com/api/appdetails?appids=730&l=en
@@ -46,29 +46,29 @@ public class GameTest {
 
     @Test
     void getAppid() {
-        Game cs2 = getGameFromSteam(appid);
-        System.out.println(cs2.getAppid());
-        Assertions.assertEquals("730", cs2.getAppid());
+        Game cs2 = getGameFromSteam(appId);
+        System.out.println(cs2.getAppId());
+        Assertions.assertEquals("730", cs2.getAppId());
     }
 
     @Test
     void getName() {
-        Game cs2 = getGameFromSteam(appid);
+        Game cs2 = getGameFromSteam(appId);
         System.out.println(cs2.getName());
         Assertions.assertEquals("Counter-Strike 2", cs2.getName());
     }
 
     @Test
     void getImgIconURL() {
-        Game cs2 = getGameFromSteam(appid);
+        Game cs2 = getGameFromSteam(appId);
         System.out.println(cs2.getImgIconURL());
         Assertions.assertEquals("https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg?t=1698860631", cs2.getImgIconURL());
     }
 
     @Test
     void getGameInfo() {
-        Game cs2 = getGameFromSteam(appid);
-        System.out.println("App ID: " + cs2.getAppid());
+        Game cs2 = getGameFromSteam(appId);
+        System.out.println("App ID: " + cs2.getAppId());
         System.out.println("Game Name: " + cs2.getName());
         System.out.println("Game Image: " + cs2.getImgIconURL());
     }
