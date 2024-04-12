@@ -1,29 +1,31 @@
 package org.example.steampowered.pojo;
 
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class Game {
 
-    private String appid;
+    private String appId;
     private String name;
-    private String imgIconURL;
-    // private boolean multiplayer;
-    // private boolean crossPlatform;
+    private String imgIconURL;    
     private String shortDescription;
+    private List<Category> categories;
 
-    public Game(String appid, String name, String imgIconURL,  String shortDescription) {
-        this.appid = appid;
+    public Game(String appId, String name, String imgIconURL, String shortDescription) {
+        this.appId = appId;
         this.name = name;
         this.imgIconURL = imgIconURL;       
         this.shortDescription = shortDescription;
+        this.categories = new ArrayList<Category>();
     }
 
-
-    public String getAppid() {
-        return this.appid;
+    public String getAppId() {
+        return this.appId;
     }
 
-    public void setAppid(String appid) {
-        this.appid = appid;
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public String getName() {
@@ -41,30 +43,6 @@ public class Game {
     public void setImgIconURL(String imgIconURL) {
         this.imgIconURL = imgIconURL;
     }
-
-    // public boolean isMultiplayer() {
-    //     return this.multiplayer;
-    // }
-
-    // public boolean getMultiplayer() {
-    //     return this.multiplayer;
-    // }
-
-    // public void setMultiplayer(boolean multiplayer) {
-    //     this.multiplayer = multiplayer;
-    // }
-
-    // public boolean isCrossPlatform() {
-    //     return this.crossPlatform;
-    // }
-
-    // public boolean getCrossPlatform() {
-    //     return this.crossPlatform;
-    // }
-
-    // public void setCrossPlatform(boolean crossPlatform) {
-    //     this.crossPlatform = crossPlatform;
-    // }
 
     public String getShortDescription() {
         return this.shortDescription;
