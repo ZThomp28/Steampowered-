@@ -1,28 +1,40 @@
+
 package org.example.steampowered.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpSession;
+import org.example.steampowered.pojo.User;
+import org.example.steampowered.repository.UserRepository;
 import org.expressme.openid.Association;
 import org.expressme.openid.Endpoint;
 import org.expressme.openid.OpenIdManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import static org.example.steampowered.Constants.PLAYER_SUMMARIES_API_URL;
+
 @Service
 public class OpenIdService {
 
-    private String steamId;
+    @Autowired
+    UserService userService;
 
-    public String getSteamId() {
-        return steamId;
-    }    
+    private String steamId;
     
     public String activateOpenId() {
         OpenIdManager manager = new OpenIdManager();
         // TODO  change these from localhost after uploading the project to a hosting site
-        manager.setReturnTo("http://localhost:8080");
+        manager.setReturnTo("http://localhost:8080/index");
         manager.setRealm("http://localhost:8080");
 
         Endpoint endpoint = manager.lookupEndpoint("https://steamcommunity.com/openid/");      
@@ -31,7 +43,7 @@ public class OpenIdService {
         return url;        
     }
 
-    public void filterOpenIdResults(HttpServletRequest request) {
+    public void filterOpenIdResults(HttpServletRequest request) throws IOException {
         // When the openID returns the user to the index page, grab the values from the nav bar
         Map<String, String[]> parameterMap = request.getParameterMap();     
         
@@ -67,9 +79,27 @@ public class OpenIdService {
                 steamId = parts[parts.length - 1];
             }
         }    
-        // print the id to console
-        // if(steamId != null) {
-        //     System.out.println("Steam id: " + steamId);
-        // }        
-    }    
+
+        getSteamUserDisplay(steamId);
+        
+    }
+
+    public void getSteamUserDisplay (String steamId) throws IOException {
+        String apiUrl = String.format(PLAYER_SUMMARIES_API_URL, steamId);
+
+        URL url = new URL(apiUrl);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonResponse = objectMapper.readTree(url);
+
+        JsonNode playerInfo = jsonResponse.get("response").get("players").get(0);
+
+        String profileImage = playerInfo.get("avatarmedium").asText();
+        String steamUserName = playerInfo.get("personaname").asText();     
+        
+        userService.getUser().setSteamUserName(steamUserName);
+        userService.getUser().setProfileImage(profileImage);
+        userService.getUser().setSteamID(steamId);
+    }
+
+
 }

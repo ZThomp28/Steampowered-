@@ -12,16 +12,47 @@
         <div class="tab"><a th:href="@{/}">WHEEL</a></div>
         <div class="tab"><a th:href="@{profile}">PROFILE</a></div>
         <div class="tab"><a th:href="@{multiplayer}">MULTIPLAYER</a></div>
+        <div th:if="${user.steamUserName}">
+            <h3 th:text="${user.steamUserName}"></h3>
+            <img th:src="${user.profileImage}" alt="Steam Avatar">
+            <span style = "float:right;" class = "tab"><a th:href="@{logout}">Logout</a></span>
+        </div>
     </div>
 </div>
 <div class="content">
-<h2>Welcome to your profile page!</h2>
-    <div class="profile">
-        <h3>Profile Information</h3>
-        <p>Avatar URL: <span th:text="${profileImage}"></span></p>
-        <p>Steam Username: <span th:text="${steamId}"></span></p>
-        <p>Username: <span th:text="${username}"></span></p>
-        <p>Profile URL: <span th:text="${profileUrl}"></span></p>
+    <div class="main">
+        <h2>PROFILE INFORMATION</h2>
+        <div class="card">
+            <div class="card-body">
+
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>Steam Name</td>
+                        <td>:</td>
+                        <td th:text = "${user.steamUserName}"></td>
+                    </tr>
+                    <tr>
+                        <td>Steam Profile Picture</td>
+                        <td>:</td>
+                        <td><img th:src="${user.profileImage}" alt = ""></td>
+                    </tr>
+                    <tr>
+                        <td>Website Name</td>
+                        <td>:</td>
+                        <td><input type = "text" name = "webName" size = "30"/></td>
+                    </tr>
+                    </tbody>
+                    <!-- Later on we will add the ${} expressions (and create the controllers for them) so that it can be stored in the DB -->
+                </table>
+                <form action="/saveName" method="post">
+                    <button id="updateSave" type="submit">Save Name</button>
+                </form>
+                <form action="/updateWebsite" method="post">
+                    <button id="updateSave" type="submit">Update Name</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

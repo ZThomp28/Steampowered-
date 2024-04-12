@@ -6,6 +6,22 @@
     <title>Title</title>
 </head>
 <body>
+<tr class="openid-results" th:each="entry : ${parameters}"></tr>
+<div class="top-border">
+    <h1>SteamPowered</h1> <!-- TITLE TEXT -->
+    <div class="tab-bar"> <!-- NAVIGATION BAR -->
+        <div class="tab"><a th:href="@{index}">WHEEL</a></div>
+        <div class="tab"><a th:href="@{profile}">PROFILE</a></div>
+        <div class="tab"><a th:href="@{multiplayer}">MULTIPLAYER</a></div>
+    </div>
+</div>
+<div class = "loginbody">
+    <div class="login">
+        <h1>Steampowered</h1>
+        <h2>Login with Steam</h2>
+        <a th:href="@{/redirect}"><img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png" alt="Steam Login"></a>
+    </div>
+</div>
 
 </body>
 </html>
