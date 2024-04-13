@@ -12,6 +12,13 @@ import com.google.firebase.cloud.FirestoreClient;
 
 @Configuration
 public class FirebaseConfig {
+
+    @Bean
+    public FirebaseInitialization firebaseInitialization() {
+        return new FirebaseInitialization();
+    }
+
+    
     
     @Bean
     @DependsOn("firebaseInitialization")

@@ -1,6 +1,5 @@
 package org.example.steampowered.firebaseconfig;
 
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -26,6 +25,5 @@ public class FirebaseInitialization {
         .build();
 
         FirebaseApp.initializeApp(options);
-
     }
 }
