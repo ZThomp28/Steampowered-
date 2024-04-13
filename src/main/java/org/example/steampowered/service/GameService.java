@@ -38,8 +38,7 @@ public class GameService {
         String gamesJson = "[]";
 
         try {
-            gamesJson = objectMapper.writeValueAsString(getGames());
-            System.out.println(gamesJson);
+            gamesJson = objectMapper.writeValueAsString(getGames());            
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
