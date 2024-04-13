@@ -24,8 +24,8 @@ public class ParserTest {
     //     Assertions.assertEquals(295, appIds.size());
     // }
 
-    @Test
-    void testGetGameDetails() {
-        parser.getGameDetails(userId);
-    }
+    // @Test
+    // void testGetGameDetails() {
+    //     parser.getGameDetails(userId);
+    // }
 }

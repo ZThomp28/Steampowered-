@@ -38,4 +38,13 @@ public class GameDbService {
             return null;
         }
     }
+
+    public boolean exists(String appId) throws InterruptedException, ExecutionException {
+        DocumentReference docRef = firestore.collection("games").document(appId);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+        return document.exists();
+    }
+
+    public void 
 }

@@ -2,17 +2,13 @@
 package org.example.steampowered.service;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpSession;
-import org.example.steampowered.pojo.User;
-import org.example.steampowered.repository.UserRepository;
 import org.expressme.openid.Association;
 import org.expressme.openid.Endpoint;
 import org.expressme.openid.OpenIdManager;
@@ -29,6 +25,9 @@ public class OpenIdService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ParserService parserService;
+
     private String steamId;
     
     public String activateOpenId() {
@@ -43,7 +42,7 @@ public class OpenIdService {
         return url;        
     }
 
-    public void filterOpenIdResults(HttpServletRequest request) throws IOException {
+    public void filterOpenIdResults(HttpServletRequest request) throws IOException, InterruptedException, ExecutionException {
         // When the openID returns the user to the index page, grab the values from the nav bar
         Map<String, String[]> parameterMap = request.getParameterMap();     
         
@@ -80,7 +79,8 @@ public class OpenIdService {
             }
         }    
 
-        getSteamUserDisplay(steamId);        
+        getSteamUserDisplay(steamId);  
+        parserService.getGameDetails(steamId);      
     }
 
     public void getSteamUserDisplay (String steamId) throws IOException {

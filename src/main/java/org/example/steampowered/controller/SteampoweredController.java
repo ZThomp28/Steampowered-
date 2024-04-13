@@ -1,6 +1,7 @@
 package org.example.steampowered.controller;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.steampowered.service.GameService;
@@ -30,7 +31,7 @@ public class SteampoweredController {
     GameService gameService;    
 
     @GetMapping("/index")
-    public String getIndexPage(HttpServletRequest request, Model model) throws IOException{
+    public String getIndexPage(HttpServletRequest request, Model model) throws IOException, InterruptedException, ExecutionException{
         openIdService.filterOpenIdResults(request);               
         model.addAttribute("user", userService.getUser());        
         model.addAttribute("gamesJson", gameService.getGamesAsJson());

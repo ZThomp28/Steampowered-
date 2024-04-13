@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import org.example.steampowered.Constants;
 import org.example.steampowered.pojo.Game;
@@ -20,6 +21,9 @@ public class ParserService {
 
     @Autowired
     GameService gameService;  
+
+    @Autowired
+    GameDbService gameDbService;
 
     private String libraryUrl = Constants.USER_LIBRARY_API_URL;      
     private String appInfoUrl = Constants.APP_INFO_API_URL;
@@ -44,11 +48,13 @@ public class ParserService {
         } catch(IOException e) {
             e.printStackTrace();
             System.out.println("Error grabbing user library with Steam ID");
-        }        
+        }   
+        
+        
         return gameIds;        
     }  
     
-    public void getGameDetails(String userId) {
+    public void getGameDetails(String userId) throws InterruptedException, ExecutionException {
         // Populate the arraylist by calling getUserLibraryId
         ArrayList<String> gameIds = getUserLibraryIds(userId);
         
@@ -56,6 +62,13 @@ public class ParserService {
         // grab the details individually
         try{
             for(String id: gameIds) {
+
+                // If the game exists in the database, it adds it to the gameService and skips the api call
+                if(gameDbService.exists(id)) {
+                    gameService.addGame(gameDbService.getGameById(id));
+                    continue;
+                }
+
                 String gameApi = String.format(appInfoUrl, id);                
                 URL url = new URL(gameApi);
                 ObjectMapper mapper = new ObjectMapper();
@@ -63,6 +76,7 @@ public class ParserService {
 
                 if(!root.get(id).get("success").asBoolean()) {
                     System.out.println("Api call for api ID " + id + " was not successful");
+                    
                     continue;
                 }
 
@@ -85,33 +99,31 @@ public class ParserService {
                 Game game = new Game(id, name, imgIconUrl, description);
 
                 JsonNode categoriesNode = root.get(id).get("data").get("categories");
-                if(categoriesNode.isArray()) {
+                if (categoriesNode != null && categoriesNode.isArray()) {
                     HashMap<String, Category> tempCategories = new HashMap<String, Category>();
-                    for(JsonNode categoryNode: categoriesNode) {
+                    for (JsonNode categoryNode : categoriesNode) {
                         String categoryId = categoryNode.get("id").asText();
                         String categoryDescription = categoryNode.get("description").asText();
                         tempCategories.put(categoryId, new Category(categoryId, categoryDescription));
                     }
                     game.setCategories(tempCategories);
-                }
+}
 
                 JsonNode genresNode = root.get(id).get("data").get("genres");
-                if(genresNode.isArray()) {
+                if (genresNode != null && genresNode.isArray()) {
                     HashMap<String, Genre> tempGenres = new HashMap<String, Genre>();
-                    for(JsonNode genreNode: genresNode){
+                    for (JsonNode genreNode : genresNode) {
                         String genreId = genreNode.get("id").asText();
                         String genreDescription = genreNode.get("description").asText();
                         tempGenres.put(genreId, new Genre(genreId, genreDescription));
                     }
                     game.setGenres(tempGenres);
-                }              
-                
-                // Print used for testing
-                // System.out.println("ID: " + id + ", Game: " + name + ", multiplayer: " + multiplayer + " cross plaftorm: " + crossPlatform + ", img: " + imgIconUrl);
-
+                }           
+                              
                 // Make sure no details are missing and 
                 if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
-                    gameService.addGame(game);                   
+                    gameService.addGame(game);  
+                    gameDbService.saveGame(game);                 
                 }               
                 
             }
