@@ -97,7 +97,7 @@ public class OpenIdService {
         
         userService.getUser().setSteamUserName(steamUserName);
         userService.getUser().setProfileImage(profileImage);
-        userService.getUser().setSteamID(steamId);
+        userService.getUser().setSteamID(steamId);        
     }
 
 

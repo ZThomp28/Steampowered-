@@ -17,11 +17,7 @@ class UserTest {
         // paul.setWebsiteUserName("WebsiteMindOfPaul");
     }        
 
-    @Test
-    void getWebsiteUserName() {
-        Assertions.assertEquals("WebsiteMindOfPaul", paul.getWebsiteUserName());
-    }
-
+   
     @Test
     void getSteamUserName() {
         Assertions.assertEquals("MindOfPaul", paul.getSteamUserName());

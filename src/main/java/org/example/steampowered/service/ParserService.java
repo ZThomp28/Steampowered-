@@ -25,12 +25,18 @@ public class ParserService {
     @Autowired
     GameDbService gameDbService;
 
+    @Autowired
+    UserDbService userDbService;
+
+    @Autowired
+    UserService userService;
+
     private String libraryUrl = Constants.USER_LIBRARY_API_URL;      
     private String appInfoUrl = Constants.APP_INFO_API_URL;
 
     // Grabs the user's Library with the steam ID that was acquired with OpenID. 
     // returns an ArrayList of all of the IDs
-    private ArrayList<String> getUserLibraryIds(String userId){
+    private ArrayList<String> getUserLibraryIds(String userId) throws InterruptedException, ExecutionException{
         ArrayList<String> gameIds = new ArrayList<>();
         
         String apiUrlWithSteamId = String.format(libraryUrl, userId);
@@ -43,14 +49,31 @@ public class ParserService {
             JsonNode gamesNode = root.path("response").path("games");
             for(JsonNode gameNode: gamesNode){
                 String appId = gameNode.path("appid").asText();
+
+                // If the game exists in the database, it adds it to the gameService and skips the api call
+                // if(gameDbService.exists(appId)) {
+                //     gameService.addGame(gameDbService.getGameById(appId));
+                //     continue;
+                // }
+
+                // if(gameDbService.failedCallExists(appId)) {
+                //     continue;
+                // }
+                
                 gameIds.add(appId);
             }
         } catch(IOException e) {
             e.printStackTrace();
             System.out.println("Error grabbing user library with Steam ID");
-        }   
+        }           
         
+        userService.getUser().setUserGames(gameIds);
         
+        // If the user is not currently in the database, add them
+        if(!userDbService.exists(userService.getUser().getSteamID())) {
+            userDbService.saveUser(userService.getUser());
+        }
+
         return gameIds;        
     }  
     
@@ -135,5 +158,7 @@ public class ParserService {
             e.printStackTrace();
             System.out.println("Error grabbing game details");
         }
+
+        
     }    
 }
