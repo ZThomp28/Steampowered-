@@ -1,7 +1,6 @@
 package org.example.steampowered.pojo;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Game {
@@ -10,14 +9,20 @@ public class Game {
     private String name;
     private String imgIconURL;    
     private String shortDescription;
-    private List<Category> categories;
+    private HashMap<String, Category> categories;
+    private HashMap<String, Genre> genres;
+
+    public Game(){
+
+    }
 
     public Game(String appId, String name, String imgIconURL, String shortDescription) {
         this.appId = appId;
         this.name = name;
         this.imgIconURL = imgIconURL;       
         this.shortDescription = shortDescription;
-        this.categories = new ArrayList<Category>();
+        this.categories = new HashMap<String, Category>();
+        this.genres = new HashMap<String, Genre>();
     }
 
     public String getAppId() {
@@ -50,6 +55,30 @@ public class Game {
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
+    }
+
+    public HashMap<String, Category> getCategories(){
+        return this.categories;
+    }
+
+    public void addCategory(Category category) {
+        this.categories.put(category.getId(), category);
+    }
+
+    public void addCategoryMap(HashMap<String, Category> categories) {
+        this.categories.putAll(categories);
+    }
+
+    public HashMap<String, Genre> getGenres() {
+        return this.genres;
+    }
+
+    public void addGenre(Genre genre) {
+        this.genres.put(genre.getId(), genre);
+    }
+
+    public void addGenreMap(HashMap<String, Genre> genres) {
+        this.genres.putAll(genres);
     }
     
 }

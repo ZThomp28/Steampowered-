@@ -80,8 +80,7 @@ public class OpenIdService {
             }
         }    
 
-        getSteamUserDisplay(steamId);
-        
+        getSteamUserDisplay(steamId);        
     }
 
     public void getSteamUserDisplay (String steamId) throws IOException {

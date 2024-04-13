@@ -1,6 +1,6 @@
 package org.example.steampowered.service;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.example.steampowered.pojo.Game;
 import org.example.steampowered.repository.GameRepository;
@@ -16,20 +16,21 @@ public class GameService {
     @Autowired
     GameRepository gameRepository;    
 
-    public List<Game> getGames() {
-        return gameRepository.getGames();
+    // Converts the hashmap to a Collection to act the same as an ArrayList when passed to the html
+    public Collection<Game> getGames() {
+        return gameRepository.getGames().values();
     }
     
-    public Game getGame(int index) {
-        return gameRepository.getGame(index);
+    public Game getGame(String id) {
+        return gameRepository.getGame(id);
     }
 
     public void addGame(Game game) {
         gameRepository.addGame(game);
     }
 
-    public void deleteGame(int index) {
-        gameRepository.deleteGame(index);
+    public void deleteGame(String id) {
+        gameRepository.deleteGame(id);
     }
 
     public String getGamesAsJson(){
@@ -38,6 +39,7 @@ public class GameService {
 
         try {
             gamesJson = objectMapper.writeValueAsString(getGames());
+            System.out.println(gamesJson);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

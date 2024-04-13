@@ -1,16 +1,16 @@
 package org.example.steampowered.pojo;
 
+public class Genre {
 
-public class Category {
-    
     private String id;
     private String description;
 
-    public Category(){
 
+    public Genre() {
     }
 
-    public Category(String id, String description) {
+
+    public Genre(String id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -29,7 +29,5 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-
+    }    
 }

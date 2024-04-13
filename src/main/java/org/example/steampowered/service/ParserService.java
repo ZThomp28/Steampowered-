@@ -3,9 +3,12 @@ package org.example.steampowered.service;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.example.steampowered.Constants;
 import org.example.steampowered.pojo.Game;
+import org.example.steampowered.pojo.Genre;
+import org.example.steampowered.pojo.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,27 +67,9 @@ public class ParserService {
                 }
 
                 String name = "";
-                String imgIconUrl = "";
-                boolean multiplayer = false;
-                boolean crossPlatform = false;
-                String description = "";
-                
-                // Categories such as multiplayer are stored in a sub header called "categories"
-                //  1 = Multiplayer, 29 = MMO, 27 = Cross Platform
-                JsonNode categoriesNode = root.get(id).get("data").get("categories");
-                if(categoriesNode.isArray()) {
-                    for(JsonNode categoryNode: categoriesNode) {
-                        int categoryId = categoryNode.get("id").asInt();
-                        if(categoryId == 1 || categoryId == 29) {
-                            multiplayer = true;                            
-                        }
-                        if(categoryId == 27) {
-                            crossPlatform = true;
-                            break;
-                        }
-                    }
-                }
-
+                String imgIconUrl = "";                
+                String description = "";            
+                               
                 if(root.get(id).get("data").get("name") != null) {
                     name = root.get(id).get("data").get("name").asText();
                 }                
@@ -96,13 +81,37 @@ public class ParserService {
                 if(root.get(id).get("data").get("short_description") != null) {
                     description = root.get(id).get("data").get("short_description").asText();
                 } 
+
+                Game game = new Game(id, name, imgIconUrl, description);
+
+                JsonNode categoriesNode = root.get(id).get("data").get("categories");
+                if(categoriesNode.isArray()) {
+                    HashMap<String, Category> tempCategories = new HashMap<String, Category>();
+                    for(JsonNode categoryNode: categoriesNode) {
+                        String categoryId = categoryNode.get("id").asText();
+                        String categoryDescription = categoryNode.get("description").asText();
+                        tempCategories.put(categoryId, new Category(categoryId, categoryDescription));
+                    }
+                    game.addCategoryMap(tempCategories);
+                }
+
+                JsonNode genresNode = root.get(id).get("data").get("genres");
+                if(genresNode.isArray()) {
+                    HashMap<String, Genre> tempGenres = new HashMap<String, Genre>();
+                    for(JsonNode genreNode: genresNode){
+                        String genreId = genreNode.get("id").asText();
+                        String genreDescription = genreNode.get("description").asText();
+                        tempGenres.put(genreId, new Genre(genreId, genreDescription));
+                    }
+                    game.addGenreMap(tempGenres);
+                }              
                 
                 // Print used for testing
-                System.out.println("ID: " + id + ", Game: " + name + ", multiplayer: " + multiplayer + " cross plaftorm: " + crossPlatform + ", img: " + imgIconUrl);
+                // System.out.println("ID: " + id + ", Game: " + name + ", multiplayer: " + multiplayer + " cross plaftorm: " + crossPlatform + ", img: " + imgIconUrl);
 
                 // Make sure no details are missing and 
                 if(!name.isEmpty() && !imgIconUrl.isEmpty()) {
-                    gameService.addGame(new Game(id, name, imgIconUrl, description));                   
+                    gameService.addGame(game);                   
                 }               
                 
             }
