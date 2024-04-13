@@ -13,7 +13,8 @@ public class Game {
     private HashMap<String, Genre> genres;
 
     public Game(){
-
+        this.categories = new HashMap<String, Category>();
+        this.genres = new HashMap<String, Genre>();
     }
 
     public Game(String appId, String name, String imgIconURL, String shortDescription) {
@@ -61,24 +62,24 @@ public class Game {
         return this.categories;
     }
 
-    public void addCategory(Category category) {
-        this.categories.put(category.getId(), category);
+    public void setCategories(HashMap<String, Category> categories) {
+        this.categories = categories;
     }
 
-    public void addCategoryMap(HashMap<String, Category> categories) {
-        this.categories.putAll(categories);
-    }
+    public void addCategory(Category category) {
+        this.categories.put(category.getId(), category);
+    }   
 
     public HashMap<String, Genre> getGenres() {
         return this.genres;
     }
+    
+    public void setGenres(HashMap<String, Genre> genres) {
+        this.genres = genres;
+    }
 
     public void addGenre(Genre genre) {
         this.genres.put(genre.getId(), genre);
-    }
-
-    public void addGenreMap(HashMap<String, Genre> genres) {
-        this.genres.putAll(genres);
-    }
+    }  
     
 }

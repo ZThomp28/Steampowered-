@@ -20,7 +20,7 @@ public class GameDbService {
         this.firestore = firestore;
     }
 
-    public String saveGame(Game game) throws InterruptedException, ExecutionException{
+    public String saveGame(Game game) throws InterruptedException, ExecutionException {
         ApiFuture<WriteResult> writeResult = firestore.collection("games").document(game.getAppId()).set(game);
         return writeResult.get().getUpdateTime().toString();
     }

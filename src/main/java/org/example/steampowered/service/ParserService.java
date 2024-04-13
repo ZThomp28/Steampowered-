@@ -92,7 +92,7 @@ public class ParserService {
                         String categoryDescription = categoryNode.get("description").asText();
                         tempCategories.put(categoryId, new Category(categoryId, categoryDescription));
                     }
-                    game.addCategoryMap(tempCategories);
+                    game.setCategories(tempCategories);
                 }
 
                 JsonNode genresNode = root.get(id).get("data").get("genres");
@@ -103,7 +103,7 @@ public class ParserService {
                         String genreDescription = genreNode.get("description").asText();
                         tempGenres.put(genreId, new Genre(genreId, genreDescription));
                     }
-                    game.addGenreMap(tempGenres);
+                    game.setGenres(tempGenres);
                 }              
                 
                 // Print used for testing
