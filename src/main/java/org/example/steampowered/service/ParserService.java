@@ -69,6 +69,10 @@ public class ParserService {
                     continue;
                 }
 
+                if(gameDbService.failedCallExists(id)) {
+                    continue;
+                }
+
                 String gameApi = String.format(appInfoUrl, id);                
                 URL url = new URL(gameApi);
                 ObjectMapper mapper = new ObjectMapper();
@@ -76,7 +80,7 @@ public class ParserService {
 
                 if(!root.get(id).get("success").asBoolean()) {
                     System.out.println("Api call for api ID " + id + " was not successful");
-                    
+                    gameDbService.addToFailedCalls(id);
                     continue;
                 }
 

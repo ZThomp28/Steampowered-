@@ -1,10 +1,12 @@
 package org.example.steampowered.service;
 
+import org.example.steampowered.pojo.FailedCall;
 import org.example.steampowered.pojo.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
@@ -46,5 +48,15 @@ public class GameDbService {
         return document.exists();
     }
 
-    public void 
+    public void addToFailedCalls(String appId) {
+        CollectionReference failedCallsRef = firestore.collection("failed_games");
+        failedCallsRef.document(appId).set(new FailedCall(appId));
+    }
+
+    public boolean failedCallExists(String appId) throws InterruptedException, ExecutionException {
+        DocumentReference docRef = firestore.collection("failed_games").document(appId);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+        return document.exists();
+    }
 }

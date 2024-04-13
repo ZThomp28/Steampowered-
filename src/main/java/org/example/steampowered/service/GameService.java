@@ -1,6 +1,7 @@
 package org.example.steampowered.service;
 
 import java.util.Collection;
+import java.util.concurrent.CountDownLatch;
 
 import org.example.steampowered.pojo.Game;
 import org.example.steampowered.repository.GameRepository;
@@ -12,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class GameService {    
+
+    private final CountDownLatch gameDetailsLatch = new CountDownLatch(1);
 
     @Autowired
     GameRepository gameRepository;    
@@ -43,6 +46,5 @@ public class GameService {
             e.printStackTrace();
         }
         return gamesJson;
-    }
-    
+    }    
 }
