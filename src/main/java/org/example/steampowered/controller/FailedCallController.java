@@ -1,7 +1,10 @@
 package org.example.steampowered.controller;
 
-import org.example.steampowered.pojo.Game;
-import org.example.steampowered.service.GameDbService;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import org.example.steampowered.pojo.FailedCall;
+import org.example.steampowered.service.FailedCallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,38 +13,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
 @RestController
 @RequestMapping("/api")
-public class GameController {
+public class FailedCallController {
     
     @Autowired
-    private GameDbService gameDbService;
+    private FailedCallService failedCallService;
 
-    @PostMapping("/games")
-    public String saveGame(@RequestBody Game game) throws InterruptedException, ExecutionException {
-        return gameDbService.saveGame(game);
+    @PostMapping("/failedCall")
+    public String saveFailedCall(@RequestBody FailedCall failedCall) throws InterruptedException, ExecutionException {
+        return failedCallService.saveFailedCall(failedCall);
     }
 
-    @GetMapping("/games/{appId}")
-    public Game getGameById(@PathVariable String appId) {
+    @GetMapping("failedCall/{appId}")
+    public FailedCall getFailedCallById(@PathVariable String appId) {
         try {
-            return gameDbService.getGameById(appId);
+            return failedCallService.getFailedCallById(appId);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    @GetMapping("/games/all")
-    public List<Game> getAllGames() {
+    @GetMapping("failedCall/all")
+    public List<FailedCall> getAllFailedCalls() {
         try {
-            return gameDbService.getAllGames();
+            return failedCallService.getAllFailedCalls();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;
         }
-    }    
+    }
 }

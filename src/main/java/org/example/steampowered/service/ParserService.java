@@ -10,6 +10,7 @@ import org.example.steampowered.Constants;
 import org.example.steampowered.pojo.Game;
 import org.example.steampowered.pojo.Genre;
 import org.example.steampowered.pojo.Category;
+import org.example.steampowered.pojo.FailedCall;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,9 @@ public class ParserService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    FailedCallService failedCallService;
 
     private String libraryUrl = Constants.USER_LIBRARY_API_URL;      
     private String appInfoUrl = Constants.APP_INFO_API_URL;
@@ -92,7 +96,7 @@ public class ParserService {
                     continue;
                 }
 
-                if(gameDbService.failedCallExists(id)) {
+                if(failedCallService.failedCallExists(id)) {
                     continue;
                 }
 
@@ -103,7 +107,7 @@ public class ParserService {
 
                 if(!root.get(id).get("success").asBoolean()) {
                     System.out.println("Api call for api ID " + id + " was not successful");
-                    gameDbService.addToFailedCalls(id);
+                    failedCallService.saveFailedCall(new FailedCall(id));
                     continue;
                 }
 
