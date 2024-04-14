@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -33,4 +34,14 @@ public class GameController {
             return null;
         }
     }
+
+    @GetMapping("/games/all")
+    public List<Game> getAllGames() {
+        try {
+            return gameDbService.getAllGames();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }    
 }

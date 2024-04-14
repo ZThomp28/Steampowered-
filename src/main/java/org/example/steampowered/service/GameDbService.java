@@ -10,8 +10,12 @@ import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -46,17 +50,36 @@ public class GameDbService {
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
         return document.exists();
+    }  
+   
+
+    public ArrayList<Game> getAllGames() throws InterruptedException, ExecutionException { 
+        CollectionReference collectionRef = firestore.collection("games");
+        ApiFuture<QuerySnapshot> future = collectionRef.get();       
+        ArrayList<Game> games = new ArrayList<>();   
+
+        for (DocumentSnapshot document : future.get()) {
+            Game category = document.toObject(Game.class);
+            games.add(category);
+        }
+        
+        return games;
     }
 
-    public void addToFailedCalls(String appId) {
-        CollectionReference failedCallsRef = firestore.collection("failed_games");
-        failedCallsRef.document(appId).set(new FailedCall(appId));
+    public HashMap<String, Game> getAllGamesAsMap() throws InterruptedException, ExecutionException {
+        CollectionReference collectionRef = firestore.collection("games");
+        ApiFuture<QuerySnapshot> future = collectionRef.get();       
+        HashMap<String , Game> games = new HashMap<>(); 
+        
+        for (DocumentSnapshot document : future.get()) {
+            Game game = document.toObject(Game.class);
+            if(game != null) {
+                games.put(game.getAppId(), game);
+            }            
+        }
+        
+        return games;
     }
 
-    public boolean failedCallExists(String appId) throws InterruptedException, ExecutionException {
-        DocumentReference docRef = firestore.collection("failed_games").document(appId);
-        ApiFuture<DocumentSnapshot> future = docRef.get();
-        DocumentSnapshot document = future.get();
-        return document.exists();
-    }
+    
 }

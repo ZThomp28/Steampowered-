@@ -10,6 +10,7 @@ import org.example.steampowered.Constants;
 import org.example.steampowered.pojo.Game;
 import org.example.steampowered.pojo.Genre;
 import org.example.steampowered.pojo.Category;
+import org.example.steampowered.pojo.FailedCall;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +32,24 @@ public class ParserService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    FailedCallService failedCallService;
+
     private String libraryUrl = Constants.USER_LIBRARY_API_URL;      
     private String appInfoUrl = Constants.APP_INFO_API_URL;
+
+    private HashMap<String, Game> dbGames = new HashMap<>();
+    private HashMap<String, FailedCall> dBFailedCalls = new HashMap<>();
 
     // Grabs the user's Library with the steam ID that was acquired with OpenID. 
     // returns an ArrayList of all of the IDs
     private ArrayList<String> getUserLibraryIds(String userId) throws InterruptedException, ExecutionException{
+        
+        // Fills an ArrayList of all of the games and failed call Id's in the database to check agains what 
+        // is gathered from the API
+        dbGames = gameDbService.getAllGamesAsMap();
+        dBFailedCalls = failedCallService.getAllFailedCallsAsMap();
+
         ArrayList<String> gameIds = new ArrayList<>();
         
         String apiUrlWithSteamId = String.format(libraryUrl, userId);
@@ -50,22 +63,27 @@ public class ParserService {
             for(JsonNode gameNode: gamesNode){
                 String appId = gameNode.path("appid").asText();
 
-                // If the game exists in the database, it adds it to the gameService and skips the api call
-                // if(gameDbService.exists(appId)) {
-                //     gameService.addGame(gameDbService.getGameById(appId));
-                //     continue;
-                // }
+                // Checks if the id exists in the games or failed calls stored in the database.
+                // If it does exist, it adds the object to the proper service and continues
+                // so that the ID is not added to gameIds which reduces our for loop in the
+                // next method and subsequently the number of api calls needed.
+                if(dbGames.containsKey(appId)) {
+                    gameService.addGame(dbGames.get(appId));
+                    continue;
+                }
 
-                // if(gameDbService.failedCallExists(appId)) {
-                //     continue;
-                // }
+                if(dBFailedCalls.containsKey(appId)) {                    
+                    continue;
+                }
                 
                 gameIds.add(appId);
             }
         } catch(IOException e) {
             e.printStackTrace();
             System.out.println("Error grabbing user library with Steam ID");
-        }           
+        } 
+        
+        
         
         userService.getUser().setUserGames(gameIds);
         
@@ -84,18 +102,8 @@ public class ParserService {
         // Game Details API only takes one ID at a time, so we have to loop through all of the IDs and
         // grab the details individually
         try{
-            for(String id: gameIds) {
-
-                // If the game exists in the database, it adds it to the gameService and skips the api call
-                if(gameDbService.exists(id)) {
-                    gameService.addGame(gameDbService.getGameById(id));
-                    continue;
-                }
-
-                if(gameDbService.failedCallExists(id)) {
-                    continue;
-                }
-
+            for(String id: gameIds) {               
+                
                 String gameApi = String.format(appInfoUrl, id);                
                 URL url = new URL(gameApi);
                 ObjectMapper mapper = new ObjectMapper();
@@ -103,7 +111,7 @@ public class ParserService {
 
                 if(!root.get(id).get("success").asBoolean()) {
                     System.out.println("Api call for api ID " + id + " was not successful");
-                    gameDbService.addToFailedCalls(id);
+                    failedCallService.saveFailedCall(new FailedCall(id));
                     continue;
                 }
 
