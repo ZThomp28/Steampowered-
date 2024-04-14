@@ -1,6 +1,7 @@
 package org.example.steampowered.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -39,14 +40,30 @@ public class FailedCallService {
         return document.exists();
     }
 
-    public List<FailedCall> getAllFailedCalls() throws InterruptedException, ExecutionException {
+    public ArrayList<FailedCall> getAllFailedCalls() throws InterruptedException, ExecutionException {
         CollectionReference collectionRef = firestore.collection("failed_games");
         ApiFuture<QuerySnapshot> future = collectionRef.get();       
-        List<FailedCall> failedGames = new ArrayList<>();  
+        ArrayList<FailedCall> failedGames = new ArrayList<>();  
 
         for (DocumentSnapshot document : future.get()) {
             FailedCall fc = document.toObject(FailedCall.class);
             failedGames.add(fc);
+        }
+        
+        return failedGames;
+    }
+
+    
+    public HashMap<String, FailedCall> getAllFailedCallsAsMap() throws InterruptedException, ExecutionException {
+        CollectionReference collectionRef = firestore.collection("failed_games");
+        ApiFuture<QuerySnapshot> future = collectionRef.get();       
+        HashMap<String , FailedCall> failedGames = new HashMap<>(); 
+        
+        for (DocumentSnapshot document : future.get()) {
+            FailedCall fc = document.toObject(FailedCall.class);
+            if(fc != null) {
+                failedGames.put(fc.getAppId(), fc);
+            }            
         }
         
         return failedGames;
