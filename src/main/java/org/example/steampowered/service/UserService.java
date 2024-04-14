@@ -21,6 +21,7 @@ public class UserService {
         userRepository.getUser().setProfileImage("");
         userRepository.getUser().setSteamID("");
         userRepository.getUser().setSteamUserName("");
+        userRepository.getUser().getUserGames().clear();
     }
     
 }
