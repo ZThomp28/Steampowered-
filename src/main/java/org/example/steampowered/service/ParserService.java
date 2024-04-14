@@ -72,8 +72,7 @@ public class ParserService {
                     continue;
                 }
 
-                if(dBFailedCalls.containsKey(appId)) {
-                    failedCallService.saveFailedCall(dBFailedCalls.get(appId));
+                if(dBFailedCalls.containsKey(appId)) {                    
                     continue;
                 }
                 
