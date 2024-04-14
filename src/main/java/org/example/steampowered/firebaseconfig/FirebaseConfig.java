@@ -16,10 +16,9 @@ public class FirebaseConfig {
     @Bean
     public FirebaseInitialization firebaseInitialization() {
         return new FirebaseInitialization();
-    }
-
+    }    
     
-    
+    // Waits until the Initialization is done before grabbing the Firestore Object
     @Bean
     @DependsOn("firebaseInitialization")
     public Firestore firestore() {
