@@ -53,22 +53,7 @@ public class OpenIdService {
             if ("openid.claimed_id".equals(paramName) || "openid.identity".equals(paramName)) {
                 filteredParameters.put(paramName, entry.getValue());
             }
-        }       
-
-        // print out the values to verify that it worked
-        if(filteredParameters.size() > 0){
-            for (Map.Entry<String, String[]> entry : filteredParameters.entrySet()) {
-                String paramName = entry.getKey();
-                String[] paramValues = entry.getValue();
-
-                System.out.println("Parameter: " + paramName);
-                System.out.print("Values: ");
-                for (String value : paramValues) {
-                    System.out.print(value + " ");
-                }
-                System.out.println();
-            }
-        } 
+        }             
         
         // Extract Steam ID from openid.claimed_id
         if (filteredParameters.containsKey("openid.claimed_id")) {
