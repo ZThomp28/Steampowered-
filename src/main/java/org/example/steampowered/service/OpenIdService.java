@@ -64,7 +64,8 @@ public class OpenIdService {
             }
         }    
 
-        getSteamUserDisplay(steamId);  
+        getSteamUserDisplay(steamId); 
+        // Calls the Parser here after getting the User's Steam ID 
         parserService.getGameDetails(steamId);      
     }
 

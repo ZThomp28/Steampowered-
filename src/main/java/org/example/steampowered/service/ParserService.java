@@ -90,6 +90,9 @@ public class ParserService {
         // If the user is not currently in the database, add them
         if(!userDbService.exists(userService.getUser().getSteamID())) {
             userDbService.saveUser(userService.getUser());
+        } else {
+            // updates the user in case they added or removed any games from their library
+            userDbService.updateUser(userService.getUser());
         }
 
         return gameIds;        
@@ -166,7 +169,6 @@ public class ParserService {
             e.printStackTrace();
             System.out.println("Error grabbing game details");
         }
-
         
     }    
 }
