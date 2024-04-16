@@ -28,6 +28,9 @@ public class OpenIdService {
     @Autowired
     ParserService parserService;
 
+    @Autowired
+    GameService gameService;
+
     private String steamId;
     
     public String activateOpenId() {
@@ -66,7 +69,8 @@ public class OpenIdService {
 
         getSteamUserDisplay(steamId); 
         // Calls the Parser here after getting the User's Steam ID 
-        parserService.getGameDetails(steamId);      
+        // parserService.getGameDetails(steamId);     
+         gameService.readGamesFromFile();
     }
 
     public void getSteamUserDisplay (String steamId) throws IOException {

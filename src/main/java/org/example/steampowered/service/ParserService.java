@@ -169,6 +169,8 @@ public class ParserService {
             e.printStackTrace();
             System.out.println("Error grabbing game details");
         }
-        
+       
+        // Used to create a json file to use during building
+        // gameService.writeGamesToJson();
     }    
 }
