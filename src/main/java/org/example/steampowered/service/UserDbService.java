@@ -35,4 +35,11 @@ public class UserDbService {
         DocumentSnapshot document = future.get();
         return document.exists();
     }
+    
+    public String updateUser(User user) throws InterruptedException, ExecutionException {
+        DocumentReference docRef = firestore.collection("users").document(user.getSteamID());
+        ApiFuture<WriteResult> writeResult = docRef.set(user);
+        return writeResult.get().getUpdateTime().toString();
+    }
+    
 }

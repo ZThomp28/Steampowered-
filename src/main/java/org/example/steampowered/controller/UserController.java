@@ -18,7 +18,7 @@ public class UserController {
     private UserDbService userDbService;
 
     @PostMapping("/users")
-    public String saveGame(@RequestBody User user) throws InterruptedException, ExecutionException {
+    public String saveUser(@RequestBody User user) throws InterruptedException, ExecutionException {
         return userDbService.saveUser(user);
     }
 }
