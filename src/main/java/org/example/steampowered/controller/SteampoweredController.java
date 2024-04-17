@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.steampowered.service.GameService;
 import org.example.steampowered.service.OpenIdService;
+import org.example.steampowered.service.UserDbService;
 import org.example.steampowered.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,13 +29,16 @@ public class SteampoweredController {
     UserService userService;
 
     @Autowired
-    GameService gameService;    
+    GameService gameService;  
+    
+    @Autowired
+    UserDbService userDbService;
 
     @GetMapping("/index")
     public String getIndexPage(HttpServletRequest request, Model model) throws IOException, InterruptedException, ExecutionException{
-        openIdService.filterOpenIdResults(request);               
-        model.addAttribute("user", userService.getUser());        
-        //model.addAttribute("gamesJson", gameService.getGamesAsJson());
+        openIdService.filterOpenIdResults(request);                       
+        model.addAttribute("user", userService.getUser());
+        model.addAttribute("gamesJson", gameService.getGamesAsJson());
         return "index";
     }
 
