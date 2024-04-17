@@ -36,15 +36,15 @@ public class GameService {
         gameRepository.deleteGame(id);
     }
 
-    public String getGamesAsJson(){
-        ObjectMapper objectMapper = new ObjectMapper();
-        String gamesJson = "[]";
-
-        try {
-            gamesJson = objectMapper.writeValueAsString(getGames());            
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return gamesJson;
-    }    
+//    public String getGamesAsJson(){
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String gamesJson = "[]";
+//
+//        try {
+//            gamesJson = objectMapper.writeValueAsString(getGames());
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+//        return gamesJson;
+//    }
 }

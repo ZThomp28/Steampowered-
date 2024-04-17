@@ -234,3 +234,29 @@ body, .tab {
     font-size: 16px;
     cursor: pointer;
 }
+
+/* login page */
+.login {
+    background-color: #2A475E;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    transition: transform 0.2s;
+    width: 500px;
+    text-align: center;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.loginbody {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    background: rgb(2,0,36);
+    background: radial-gradient(circle, rgba(4,0,52,1) 0%, rgba(1,0,10,1) 63%, rgba(1,0,13,1) 100%);
+    flex-direction: column;
+    margin: 0;
+}

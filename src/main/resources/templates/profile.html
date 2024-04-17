@@ -9,9 +9,8 @@
 <div class="top-border">
     <h1>SteamPowered</h1> <!-- TITLE TEXT -->
     <div class="tab-bar"> <!-- NAVIGATION BAR -->
-        <div class="tab"><a th:href="@{/}">WHEEL</a></div>
+        <div class="tab"><a th:href="@{index}">WHEEL</a></div>
         <div class="tab"><a th:href="@{profile}">PROFILE</a></div>
-        <div class="tab"><a th:href="@{multiplayer}">MULTIPLAYER</a></div>
         <div th:if="${user.steamUserName}">
             <h3 th:text="${user.steamUserName}"></h3>
             <img th:src="${user.profileImage}" alt="Steam Avatar">
@@ -37,26 +36,24 @@
                         <td>:</td>
                         <td><img th:src="${user.profileImage}" alt = ""></td>
                     </tr>
-                    <tr>
-                        <td>Website Name</td>
-                        <td>:</td>
-                        <td><input type = "text" name = "webName" size = "30"/></td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <td>Website Name</td>-->
+<!--                        <td>:</td>-->
+<!--                        <td><input type = "text" name = "webName" size = "30"/></td>-->
+<!--                    </tr>-->
                     </tbody>
                     <!-- Later on we will add the ${} expressions (and create the controllers for them) so that it can be stored in the DB -->
                 </table>
-                <form action="/saveName" method="post">
-                    <button id="updateSave" type="submit">Save Name</button>
-                </form>
-                <form action="/updateWebsite" method="post">
-                    <button id="updateSave" type="submit">Update Name</button>
-                </form>
+<!--                <form action="/saveName" method="post">-->
+<!--                    <button id="updateSave" type="submit">Save Name</button>-->
+<!--                </form>-->
+<!--                <form action="/updateWebsite" method="post">-->
+<!--                    <button id="updateSave" type="submit">Update Name</button>-->
+<!--                </form>-->
             </div>
         </div>
     </div>
 </div>
-
-<div class="bottom-border"></div>
 
 </body>
 </html>

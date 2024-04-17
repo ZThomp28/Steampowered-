@@ -34,7 +34,7 @@ public class SteampoweredController {
     public String getIndexPage(HttpServletRequest request, Model model) throws IOException, InterruptedException, ExecutionException{
         openIdService.filterOpenIdResults(request);               
         model.addAttribute("user", userService.getUser());        
-        model.addAttribute("gamesJson", gameService.getGamesAsJson());
+        //model.addAttribute("gamesJson", gameService.getGamesAsJson());
         return "index";
     }
 
@@ -59,8 +59,8 @@ public class SteampoweredController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        request.getSession().invalidate();
+    public String logout() {
+        userService.nullUser();
         return "redirect:/";
     }
 }
