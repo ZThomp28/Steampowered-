@@ -69,8 +69,10 @@ public class OpenIdService {
 
         getSteamUserDisplay(steamId); 
         // Calls the Parser here after getting the User's Steam ID 
-        // parserService.getGameDetails(steamId);     
-         gameService.readGamesFromFile();
+        parserService.getGameDetails(steamId);     
+        
+        // Used for reading from file rather than database to limit calls when building
+        //  gameService.readGamesFromFile();
     }
 
     public void getSteamUserDisplay (String steamId) throws IOException {
