@@ -209,12 +209,53 @@ function spinWheel() {
         else {
             const landedSectionIndex = Math.floor(((360 - currentRotation) % 360) / (360 / sections.length));
             showResultAndButtons(sections[landedSectionIndex]);
-            const resultText = `And the winner is: ${sections[landedSectionIndex]} !`;
-            document.getElementById('result').textContent = resultText;
+
             if (typeof landedSectionIndex === 'undefined' || landedSectionIndex < 0 || landedSectionIndex >= games.length) {
                 console.log('Invalid section index');
                 return;
             }
+
+            //MODAL WHICH DISPLAYS THE WINNER
+            var modal = document.getElementById("resultModal");
+            var span = document.getElementsByClassName("close")[0];
+            var modalContent = modal.querySelector(".modal-content");
+
+            var resultMessage = document.getElementById("resultMessage");
+            resultMessage.textContent = `AND THE WINNER IS ${sections[landedSectionIndex]}!`; // Set the text
+            modal.style.display = "block";
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+
+            //ADDS THE GO TO GAME FUNCTION INSIDE OF THE MODAL
+            const existingSpinAgain = document.getElementById('respin');
+            if (existingSpinAgain) existingSpinAgain.remove();
+
+            const respinBtn = document.createElement('button');
+            respinBtn.id='respin';
+            respinBtn.innerText="Spin Again!";
+            respinBtn.addEventListener('click', spinWheel);
+            respinBtn.addEventListener('click', function(){
+                if (modal) {
+                    modal.style.display = 'none'; // Hides the modal by changing its display style
+                }
+            })
+
+
+
+
+
+
+
+
+
+
             const selectedGame = currentGamesSubset[landedSectionIndex];
             const imgIconURL = selectedGame.imgIconURL;//ACCESSES THE IMG HEADER OF THE GAME
 
@@ -224,9 +265,9 @@ function spinWheel() {
             if (!imgDisplayArea) {
                 imgDisplayArea = document.createElement('div');
                 imgDisplayArea.id = 'imgDisplayArea';
-                document.body.appendChild(imgDisplayArea); // Append the display area to the document body
+                modalContent.appendChild(imgDisplayArea); // Append the display area to the document body
             }
-            imgDisplayArea.style.padding = '20px 250px';
+            imgDisplayArea.style.padding = '20px 200px';
             imgDisplayArea.style.textAlign = 'left';
             imgDisplayArea.style.color = 'white';
             imgDisplayArea.style.marginTop = '50px';
@@ -244,10 +285,13 @@ function spinWheel() {
         </div>
         <div style="clear: both;"></div>
     `;
+            modalContent.appendChild(respinBtn);
         }
     };
     requestAnimationFrame(spin);
 }
+
+
 function showResultAndButtons(result) {
 
 
@@ -257,33 +301,27 @@ function showResultAndButtons(result) {
     if (existingReshuffleBtn) existingReshuffleBtn.remove();
     if (existingGoToGameBtn) existingGoToGameBtn.remove();
 
-    //GO TO GAME BUTTON
-    const goToGameBtn = document.createElement('button');
-    goToGameBtn.id = "goToGame";
-    goToGameBtn.innerText = 'Go to Game';
-    goToGameBtn.className = 'action-button';
-    goToGameBtn.addEventListener('click', function() {
-        const imgDisplayArea = document.getElementById('imgDisplayArea');
 
-        //DRAGS USERS SCREEN DOWN IN ORDER TO SEE GAME INFORMATION
-        if (imgDisplayArea) {
-            imgDisplayArea.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            console.warn('imgDisplayArea not found');
-        }
-        console.log('Going to game...');
-    });
 
     //BUTTONS APPEND
-    const buttonsContainer = document.getElementById('spin').parentNode;
-    buttonsContainer.appendChild(goToGameBtn);
+
     genreMenu.appendChild(reshuffleBtn);
 }
+
+
 
 document.getElementById('spin').addEventListener('click', spinWheel);
 
 drawWheel();
 drawArrow();
 </script>
+
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="resultMessage"></p>
+        </div>
+    </div>
+
 </body>
 </html>
