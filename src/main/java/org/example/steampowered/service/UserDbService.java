@@ -11,7 +11,7 @@ import com.google.auto.service.AutoService;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
-import com.google.firebase.FirebaseApp;
+
 import com.google.cloud.firestore.WriteResult;
 
 @Service

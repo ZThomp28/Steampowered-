@@ -1,7 +1,7 @@
 package org.example.steampowered.pojo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class User {
     

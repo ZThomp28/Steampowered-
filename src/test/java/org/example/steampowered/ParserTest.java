@@ -1,11 +1,8 @@
 package org.example.steampowered;
 
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.example.steampowered.service.ParserService;
-import org.junit.jupiter.api.Assertions;
 
 public class ParserTest {
     

@@ -1,8 +1,5 @@
 package org.example.steampowered.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.example.steampowered.pojo.User;
 import org.springframework.stereotype.Repository;
 

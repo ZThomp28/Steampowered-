@@ -2,7 +2,7 @@ package org.example.steampowered.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.concurrent.ExecutionException;
 
 import org.example.steampowered.pojo.FailedCall;
