@@ -42,8 +42,6 @@ public class GameTest {
         return g;
     }
 
-
-
     @Test
     void getAppid() {
         Game cs2 = getGameFromSteam(appId);

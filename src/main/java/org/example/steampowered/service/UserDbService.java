@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.core.ApiFuture;
-import com.google.auto.service.AutoService;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
@@ -40,6 +39,5 @@ public class UserDbService {
         DocumentReference docRef = firestore.collection("users").document(user.getSteamID());
         ApiFuture<WriteResult> writeResult = docRef.set(user);
         return writeResult.get().getUpdateTime().toString();
-    }
-    
+    }    
 }
