@@ -3,7 +3,6 @@ package org.example.steampowered.controller;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.example.steampowered.service.GameService;
 import org.example.steampowered.service.OpenIdService;
 import org.example.steampowered.service.UserDbService;

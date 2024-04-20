@@ -1,6 +1,5 @@
 package org.example.steampowered.service;
 
-import org.example.steampowered.pojo.FailedCall;
 import org.example.steampowered.pojo.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import com.google.cloud.firestore.WriteResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
