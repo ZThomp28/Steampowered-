@@ -120,13 +120,19 @@ reshuffleBtn.addEventListener('click', function() {
 
 //WHEEL CREATION
 function calculateFontSize(text, ctx, maxTextWidth) {
-    let fontSize = 20; //BASE FONT SIZE
+    let fontSize = 20;//BASE FONT SIZE
     ctx.font = `${fontSize}px Arial`;
-    let textWidth = ctx.measureText(text).width;
 
-    //ALLOWS FONT SIZE TO SHRINK IF THE TEXT WIDTH IS TOO LARGE BUT DOES NOT ALLOW IT TO GO BELOW A CERTAIN SIZE
-    while (textWidth > maxTextWidth && fontSize > 12) {
+
+    let textWidth = ctx.measureText(text).width;
+    let maxLength = 30;
+
+    //ADJUSTS FONT SIZE
+    while (textWidth > maxTextWidth || text.length > maxLength) {
         fontSize -= 1;
+        if (fontSize <= 9) {
+            break;
+        }
         ctx.font = `${fontSize}px Arial`;
         textWidth = ctx.measureText(text).width;
     }
@@ -186,9 +192,13 @@ function drawArrow() {
 
 //SPIN WHEEL
 function spinWheel() {
-    const spinTo = Math.random() * 7200;
+    let spinTo = Math.random() * 10000;
+    console.log(spinTo);
+    if (spinTo <= 500){
+        spinTo = spinTo * 10;
+    }
     const duration = 5000;
-
+    console.log(spinTo);
     const start = Date.now();
     const spin = () => {
         const timePassed = Date.now() - start;
