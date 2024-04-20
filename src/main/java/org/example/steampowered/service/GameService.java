@@ -3,8 +3,7 @@ package org.example.steampowered.service;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.concurrent.CountDownLatch;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.io.InputStreamReader;

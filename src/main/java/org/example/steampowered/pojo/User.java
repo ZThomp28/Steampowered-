@@ -2,7 +2,6 @@ package org.example.steampowered.pojo;
 
 import java.util.ArrayList;
 
-
 public class User {
     
     private String steamUserName;

@@ -48,8 +48,7 @@ public class GameDbService {
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
         return document.exists();
-    }  
-   
+    }     
 
     public ArrayList<Game> getAllGames() throws InterruptedException, ExecutionException { 
         CollectionReference collectionRef = firestore.collection("games");
@@ -77,7 +76,5 @@ public class GameDbService {
         }
         
         return games;
-    }
-
-    
+    }    
 }
