@@ -6,6 +6,7 @@
     <title>SteamPowered Profile Page</title>
 </head>
 <body>
+<tr class="openid-results" th:each="entry : ${parameters}"></tr>
 <div class="top-border">
     <h1>SteamPowered</h1> <!-- TITLE TEXT -->
     <div class="tab-bar"> <!-- NAVIGATION BAR -->
@@ -23,6 +24,8 @@
         <h2>PROFILE INFORMATION</h2>
         <div class="card">
             <div class="card-body">
+
+                test text
 
                 <table>
                     <tbody>
@@ -50,10 +53,72 @@
 <!--                <form action="/updateWebsite" method="post">-->
 <!--                    <button id="updateSave" type="submit">Update Name</button>-->
 <!--                </form>-->
+
+                <h1>Steam Games</h1>
+
+                <!-- Container for displaying game names and images -->
+                <div id="gamesList"></div>
+
+                <!-- Button to show more games -->
+                <button id="showMoreButton">Show More</button>
+
+                <!-- JavaScript code to display game names and images -->
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    var gamesJsonString = /*[[${gamesJson}]]*/ '[]';
+                    var games = JSON.parse(gamesJsonString);
+
+                    // Get the container element where we want to display the game names and images
+                    var gamesListContainer = document.getElementById('gamesList');
+
+                    // Number of games initially displayed
+                    var initialGamesCount = 5;
+
+                    // Function to display games
+                    function displayGames(startIndex, count) {
+                        for (var i = startIndex; i < startIndex + count && i < games.length; i++) {
+                            var game = games[i];
+                            var gameDiv = createGameDiv(game);
+                            gamesListContainer.appendChild(gameDiv);
+                        }
+                    }
+
+                    // Function to create a game div
+                    function createGameDiv(game) {
+                        var gameDiv = document.createElement('div');
+                        gameDiv.classList.add('game-item');
+
+                        var imageElement = document.createElement('img');
+                        imageElement.src = game.imgIconURL; // Changed to imgIconURL
+                        imageElement.alt = game.name;
+                        gameDiv.appendChild(imageElement);
+
+                        var nameElement = document.createElement('p');
+                        nameElement.textContent = game.name;
+                        gameDiv.appendChild(nameElement);
+
+                        return gameDiv;
+                    }
+
+                    // Display initial set of games
+                    displayGames(0, initialGamesCount);
+
+                    // Show more button functionality
+                    var showMoreButton = document.getElementById('showMoreButton');
+                    var visibleGamesCount = initialGamesCount;
+                    showMoreButton.addEventListener('click', function() {
+                        var additionalGamesCount = 5; // Number of games to show on each click
+                        displayGames(visibleGamesCount, additionalGamesCount);
+                        visibleGamesCount += additionalGamesCount;
+                        if (visibleGamesCount >= games.length) {
+                            showMoreButton.style.display = 'none'; // Hide the button when all games are shown
+                        }
+                    });
+                    /*]]>*/
+                </script>
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

@@ -53,6 +53,7 @@ public class SteampoweredController {
     @GetMapping("/profile")
     public String getProfilePage(HttpServletRequest request, Model model){            
         model.addAttribute("user", userService.getUser());
+        model.addAttribute("gamesJson", gameService.getGamesAsJson());
         return "profile";
     }
 

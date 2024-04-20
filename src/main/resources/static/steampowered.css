@@ -329,4 +329,20 @@ body, .tab {
     transform: translateY(2px);
 }
 
+/*profile library*/
+.game-item {
+    margin-bottom: 20px;
+}
 
+.game-item img {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.game-item p {
+    display: inline-block;
+    vertical-align: middle;
+}
